@@ -61,7 +61,7 @@ export default function ProfilePage() {
       <div className="flex items-center gap-4">
         <Link 
           href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
+          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-lg border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
           style={{ minHeight: '56px', minWidth: '80px' }}
           title="Back to dashboard"
         >
@@ -73,13 +73,13 @@ export default function ProfilePage() {
       </div>
 
       {successMsg && (
-        <div className="p-4 bg-emerald-50 border-2 border-emerald-300 text-emerald-950 font-bold rounded-2xl text-base shadow-sm">
+        <div className="p-4 bg-beige/40 border border-ash-grey text-dark-teal font-bold rounded-lg text-base shadow-sm">
           {successMsg}
         </div>
       )}
 
       {/* Profile Form */}
-      <form onSubmit={handleSave} className="flex flex-col gap-6 bg-white rounded-3xl p-6 border-2 border-gray-200 shadow-sm">
+      <form onSubmit={handleSave} className="flex flex-col gap-6 bg-white rounded-lg p-6 border-2 border-gray-200 shadow-sm">
         
         {/* Phone number (Read-Only) */}
         <div className="flex flex-col gap-1.5 opacity-75">
@@ -87,7 +87,7 @@ export default function ProfilePage() {
             Registered Phone Number (Cannot change)
           </label>
           <div 
-            className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl p-4 text-lg font-black text-gray-650 flex items-center"
+            className="w-full bg-gray-50 border-2 border-gray-200 rounded-lg p-4 text-lg font-black text-gray-650 flex items-center"
             style={{ minHeight: '56px' }}
           >
             +91 {user.phone}
@@ -106,7 +106,7 @@ export default function ProfilePage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your full name"
-            className="w-full border-2 border-gray-300 rounded-xl p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
+            className="w-full border-2 border-gray-300 rounded-lg p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
             style={{ minHeight: '56px' }}
           />
         </div>
@@ -123,7 +123,7 @@ export default function ProfilePage() {
             value={ward}
             onChange={(e) => setWard(e.target.value)}
             placeholder="e.g. Greenfield Ward 12"
-            className="w-full border-2 border-gray-300 rounded-xl p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
+            className="w-full border-2 border-gray-300 rounded-lg p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
             style={{ minHeight: '56px' }}
           />
         </div>
@@ -140,7 +140,7 @@ export default function ProfilePage() {
             value={houseNo}
             onChange={(e) => setHouseNo(e.target.value)}
             placeholder="e.g. GH-42"
-            className="w-full border-2 border-gray-300 rounded-xl p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
+            className="w-full border-2 border-gray-300 rounded-lg p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
             style={{ minHeight: '56px' }}
           />
         </div>
@@ -149,7 +149,7 @@ export default function ProfilePage() {
         <button
           type="submit"
           disabled={!name.trim() || !ward.trim() || !houseNo.trim()}
-          className="w-full mt-2 py-4.5 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-black rounded-2xl shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed"
+          className="w-full mt-2 py-4.5 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-black rounded-lg shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed"
         >
           Save Profile Changes
         </button>
@@ -160,7 +160,7 @@ export default function ProfilePage() {
       <button
         type="button"
         onClick={handleLogoutClick}
-        className="w-full py-4.5 px-6 bg-red-50 hover:bg-red-100 text-red-700 font-black rounded-2xl shadow border-2 border-red-200 transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] mt-2"
+        className="w-full py-4.5 px-6 bg-red-50 hover:bg-red-100 text-red-700 font-black rounded-lg shadow border-2 border-red-200 transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] mt-2"
       >
         Log Out of Portal
       </button>

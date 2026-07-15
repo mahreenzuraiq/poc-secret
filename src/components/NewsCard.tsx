@@ -79,10 +79,10 @@ export default function NewsCard({ news }: NewsCardProps) {
   };
 
   return (
-    <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-air-force shadow-md ring-4 ring-air-force/10' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
+    <div className={`bg-white rounded-lg border-2 transition-all ${isSpeaking ? 'border-air-force shadow-md ring-4 ring-air-force/10' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
+          <span className={`text-base font-bold px-3 py-1 rounded-md border ${getCategoryStyles(news.category)}`}>
             {news.category}
           </span>
           <span className={`text-xs font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${getPriorityBadgeClass(news.priority)}`}>
@@ -101,7 +101,7 @@ export default function NewsCard({ news }: NewsCardProps) {
         </p>
       </div>
 
-      <p className="text-gray-700 text-lg leading-relaxed font-normal bg-gray-50/50 p-4 rounded-xl border border-gray-100">
+      <p className="text-gray-700 text-lg leading-relaxed font-normal bg-gray-50/50 p-4 rounded-lg border border-gray-100">
         {news.description}
       </p>
 
@@ -109,7 +109,7 @@ export default function NewsCard({ news }: NewsCardProps) {
       <button
         type="button"
         onClick={toggleSpeech}
-        className={`w-full py-4 px-6 rounded-xl font-bold transition-all flex items-center justify-center gap-3 text-lg active:scale-[0.98] ${
+        className={`w-full py-4 px-6 rounded-lg font-bold transition-all flex items-center justify-center gap-3 text-lg active:scale-[0.98] ${
           isSpeaking 
             ? 'bg-air-force hover:bg-air-force/90 text-white shadow-md' 
             : 'bg-dark-teal hover:bg-dark-teal/90 text-white shadow-md'

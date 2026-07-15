@@ -122,7 +122,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center py-12 px-4 sm:px-6">
-      <div className="w-full max-w-md bg-white rounded-3xl border-3 border-dark-teal shadow-xl p-8 flex flex-col gap-6">
+      <div className="w-full max-w-md bg-white rounded-lg border-2 border-dark-teal shadow-xl p-8 flex flex-col gap-6">
         
         {/* Portal Header */}
         <div className="flex flex-col items-center text-center gap-2">
@@ -133,7 +133,7 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-2xl text-base font-semibold">
+          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg text-base font-semibold">
             {error}
           </div>
         )}
@@ -160,7 +160,7 @@ export default function LoginPage() {
                   value={phone ? formatPhoneNumber(phone) : ''}
                   onChange={onPhoneChange}
                   placeholder="98765 43210"
-                  className="w-full pl-16 pr-4 py-4 text-xl font-bold border-2 border-gray-300 rounded-2xl outline-none focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 transition-all text-ink-black"
+                  className="w-full pl-16 pr-4 py-4 text-xl font-bold border-2 border-gray-300 rounded-lg outline-none focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 transition-all text-ink-black"
                   style={{ minHeight: '64px' }}
                 />
               </div>
@@ -169,7 +169,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={phone.length !== 10 || isSubmitting}
-              className={`w-full py-4.5 px-6 font-black rounded-2xl text-xl flex items-center justify-center gap-2 transition-all shadow-md ${
+              className={`w-full py-4.5 px-6 font-black rounded-lg text-xl flex items-center justify-center gap-2 transition-all shadow-md ${
                 phone.length === 10 && !isSubmitting
                   ? 'bg-dark-teal hover:bg-dark-teal/95 text-white active:scale-[0.98]'
                   : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'
@@ -205,7 +205,7 @@ export default function LoginPage() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 4))}
                 placeholder="• • • •"
-                className="w-full py-4 text-center text-3xl font-black tracking-widest border-2 border-gray-300 rounded-2xl outline-none focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 transition-all text-ink-black"
+                className="w-full py-4 text-center text-3xl font-black tracking-widest border-2 border-gray-300 rounded-lg outline-none focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 transition-all text-ink-black"
                 style={{ minHeight: '64px' }}
               />
             </div>
@@ -214,7 +214,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={otp.length !== 4 || isSubmitting}
-                className={`w-full py-4.5 px-6 font-black rounded-2xl text-xl flex items-center justify-center gap-2 transition-all shadow-md ${
+                className={`w-full py-4.5 px-6 font-black rounded-lg text-xl flex items-center justify-center gap-2 transition-all shadow-md ${
                   otp.length === 4 && !isSubmitting
                     ? 'bg-dark-teal hover:bg-dark-teal/95 text-white active:scale-[0.98]'
                     : 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'

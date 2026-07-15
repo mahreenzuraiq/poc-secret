@@ -13,7 +13,7 @@ export default function Header() {
         {/* Branding */}
         <Link 
           href="/" 
-          className="flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-air-force/50 rounded-xl p-1.5"
+          className="flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-air-force/50 rounded-md p-1.5"
         >
           <div className="flex flex-col text-left">
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-none text-white">Greenfield Ward</h1>
@@ -22,14 +22,14 @@ export default function Header() {
         </Link>
 
         {/* Accessibility control */}
-        <div className="flex items-center gap-3 bg-ink-black/40 p-2 rounded-2xl border border-ash-grey/30">
+        <div className="flex items-center gap-3 bg-ink-black/40 p-2 rounded-lg border border-ash-grey/30">
           <span className="text-base font-bold text-beige px-1">Aa Text Size:</span>
           
           <div className="flex gap-2">
             <button
               type="button"
               onClick={() => setTextSize('normal')}
-              className={`px-4 py-2 font-bold rounded-xl transition-all border ${
+              className={`px-4 py-2 font-bold rounded-md transition-all border ${
                 textSize === 'normal'
                   ? 'bg-beige border-beige text-dark-teal shadow-md font-extrabold scale-105'
                   : 'bg-dark-teal/50 border-ash-grey/40 text-beige hover:bg-dark-teal/80'
@@ -43,7 +43,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setTextSize('large')}
-              className={`px-4 py-2 font-bold rounded-xl transition-all border ${
+              className={`px-4 py-2 font-bold rounded-md transition-all border ${
                 textSize === 'large'
                   ? 'bg-beige border-beige text-dark-teal shadow-md font-extrabold scale-105'
                   : 'bg-dark-teal/50 border-ash-grey/40 text-beige hover:bg-dark-teal/80'
@@ -57,7 +57,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setTextSize('xlarge')}
-              className={`px-4 py-2 font-bold rounded-xl transition-all border ${
+              className={`px-4 py-2 font-bold rounded-md transition-all border ${
                 textSize === 'xlarge'
                   ? 'bg-beige border-beige text-dark-teal shadow-md font-extrabold scale-105'
                   : 'bg-dark-teal/50 border-ash-grey/40 text-beige hover:bg-dark-teal/80'

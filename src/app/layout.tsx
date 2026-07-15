@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="en"
       className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col bg-beige text-ink-black">
+      <body className="min-h-full flex flex-col text-ink-black bg-white">
         <PWARegister />
         <AuthProvider>
           <ThemeProvider>

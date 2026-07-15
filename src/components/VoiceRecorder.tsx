@@ -141,7 +141,7 @@ export default function VoiceRecorder({
 
         {audioUrl ? (
           /* Finished Recording State */
-          <div className="flex flex-col gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-150">
+          <div className="flex flex-col gap-4 items-center bg-gray-50 p-4 rounded-lg border border-gray-150">
             <div className="text-gray-700 font-bold text-lg">Listen to your Voice Note:</div>
             
             <audio 
@@ -157,7 +157,7 @@ export default function VoiceRecorder({
             <button
               type="button"
               onClick={deleteRecording}
-              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors flex items-center justify-center gap-2 text-lg active:scale-[0.98]"
+              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-lg border-2 border-red-200 transition-colors flex items-center justify-center gap-2 text-lg active:scale-[0.98]"
               style={{ minHeight: '64px' }}
             >
               Delete & Record Again
@@ -165,7 +165,7 @@ export default function VoiceRecorder({
           </div>
         ) : isRecording ? (
           /* Recording Active State */
-          <div className="flex flex-col items-center justify-center p-6 bg-red-50/30 border-2 border-dashed border-red-300 rounded-2xl gap-4">
+          <div className="flex flex-col items-center justify-center p-6 bg-red-50/30 border-2 border-dashed border-red-300 rounded-lg gap-4">
             <div className="text-red-700 font-bold text-2xl animate-pulse flex items-center gap-2">
               <span className="w-4 h-4 rounded-full bg-red-600 block"></span>
               RECORDING...
@@ -192,7 +192,7 @@ export default function VoiceRecorder({
           </div>
         ) : (
           /* Start Recording Initial State */
-          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-ash-grey bg-beige/20 rounded-2xl gap-4">
+          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-ash-grey bg-beige/20 rounded-lg gap-4">
             <div className="text-dark-teal font-bold text-lg">Tap below to record description:</div>
             
             {/* Giant Record Button */}

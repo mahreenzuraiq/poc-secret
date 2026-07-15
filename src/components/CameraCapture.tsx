@@ -101,14 +101,14 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
         {existingPhoto ? (
           /* Captured Photo State */
           <div className="flex flex-col gap-4 items-center">
-            <div className="relative w-full max-w-md rounded-xl overflow-hidden border-4 border-dark-teal shadow-md aspect-video bg-gray-100">
+            <div className="relative w-full max-w-md rounded-lg overflow-hidden border-4 border-dark-teal shadow-md aspect-video bg-gray-150">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={existingPhoto} 
                 alt="Captured issue" 
                 className="w-full h-full object-cover" 
                 />
-              <div className="absolute top-2 right-2 bg-dark-teal text-white font-bold px-3 py-1.5 rounded-full text-sm shadow">
+              <div className="absolute top-2 right-2 bg-dark-teal text-white font-bold px-3 py-1.5 rounded-lg text-sm shadow">
                 Ready
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
               <button
                 type="button"
                 onClick={capturePhoto}
-                className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/90 text-white font-bold rounded-xl shadow-md transition-colors text-lg flex items-center justify-center gap-2 active:scale-[0.98]"
+                className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/90 text-white font-bold rounded-lg shadow-md transition-colors text-lg flex items-center justify-center gap-2 active:scale-[0.98]"
                 style={{ minHeight: '64px' }}
               >
                 Click to Snap Photo
@@ -169,7 +169,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Native System Camera Button (Best for Mobile PWAs) */}
               <label 
-                className="flex flex-col items-center justify-center border-3 border-dashed border-dark-teal hover:border-dark-teal/90 bg-beige/10 hover:bg-beige/25 text-dark-teal rounded-2xl p-6 cursor-pointer text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
+                className="flex flex-col items-center justify-center border-3 border-dashed border-dark-teal hover:border-dark-teal/90 bg-beige/10 hover:bg-beige/25 text-dark-teal rounded-lg p-6 cursor-pointer text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
                 <div>
@@ -189,7 +189,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
               <button
                 type="button"
                 onClick={startCamera}
-                className="flex flex-col items-center justify-center border-3 border-dashed border-air-force hover:border-air-force/90 bg-air-force/5 hover:bg-air-force/10 text-dark-teal rounded-2xl p-6 text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
+                className="flex flex-col items-center justify-center border-3 border-dashed border-air-force hover:border-air-force/90 bg-air-force/5 hover:bg-air-force/10 text-dark-teal rounded-lg p-6 text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
                 <div>

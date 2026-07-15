@@ -79,7 +79,7 @@ export default function HomePage() {
     <div className="flex flex-col gap-6 py-2">
       
       {/* 1. Welcome Card (FR-002) */}
-      <section className="bg-white border-3 border-dark-teal rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="bg-white border-2 border-dark-teal rounded-lg p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4 text-left">
           <div className="flex flex-col">
             <h2 className="text-2xl sm:text-3xl font-black text-ink-black">
@@ -97,7 +97,7 @@ export default function HomePage() {
         <button
           type="button"
           onClick={toggleHelpInstructions}
-          className={`py-3 px-5 rounded-xl font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
+          className={`py-3 px-5 rounded-lg font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
             isHelpSpeaking 
               ? 'bg-air-force hover:bg-air-force/90 text-white border border-air-force' 
               : 'bg-dark-teal hover:bg-dark-teal/90 text-white'
@@ -111,7 +111,7 @@ export default function HomePage() {
       {/* 2. Complaint Statistics (FR-002) */}
       <section className="grid grid-cols-3 gap-4 w-full">
         {/* Active Stats Card */}
-        <div className="bg-ash-grey/10 border-3 border-ash-grey rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+        <div className="bg-ash-grey/10 border-2 border-ash-grey rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
           <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
             {stats.active}
           </span>
@@ -121,7 +121,7 @@ export default function HomePage() {
         </div>
 
         {/* Resolved Stats Card */}
-        <div className="bg-air-force/10 border-3 border-air-force rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+        <div className="bg-air-force/10 border-2 border-air-force rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
           <span className="text-4xl sm:text-5xl font-black text-dark-teal leading-none">
             {stats.resolved}
           </span>
@@ -131,7 +131,7 @@ export default function HomePage() {
         </div>
 
         {/* Total Stats Card */}
-        <div className="bg-dark-teal/10 border-3 border-dark-teal rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+        <div className="bg-dark-teal/10 border-2 border-dark-teal rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
           <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
             {stats.total}
           </span>
@@ -151,7 +151,7 @@ export default function HomePage() {
           {/* Action: Raise Complaint */}
           <Link 
             href="/raise-complaint"
-            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/90 bg-dark-teal text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
+            className="flex flex-col items-center justify-center border-2 border-dark-teal hover:border-dark-teal/90 bg-dark-teal text-white rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
@@ -160,7 +160,7 @@ export default function HomePage() {
           {/* Action: Ward Updates */}
           <Link 
             href="/updates"
-            className="flex flex-col items-center justify-center border-3 border-air-force hover:border-air-force/90 bg-air-force text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-air-force/30"
+            className="flex flex-col items-center justify-center border-2 border-air-force hover:border-air-force/90 bg-air-force text-white rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-air-force/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
@@ -169,7 +169,7 @@ export default function HomePage() {
           {/* Action: My Complaints */}
           <Link 
             href="/complaints"
-            className="flex flex-col items-center justify-center border-3 border-ash-grey hover:border-ash-grey/90 bg-ash-grey text-ink-black rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ash-grey/30"
+            className="flex flex-col items-center justify-center border-2 border-ash-grey hover:border-ash-grey/90 bg-ash-grey text-ink-black rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ash-grey/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
@@ -178,7 +178,7 @@ export default function HomePage() {
           {/* Action: My Profile */}
           <Link 
             href="/profile"
-            className="flex flex-col items-center justify-center border-3 border-ink-black hover:border-ink-black/90 bg-ink-black text-beige rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ink-black/30"
+            className="flex flex-col items-center justify-center border-2 border-ink-black hover:border-ink-black/90 bg-ink-black text-beige rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ink-black/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
@@ -194,7 +194,7 @@ export default function HomePage() {
 
         {recentComplaints.length === 0 ? (
           /* Empty timeline fallback */
-          <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
+          <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
             <p>You have not registered any grievances yet.</p>
             <Link 
               href="/raise-complaint"
@@ -209,11 +209,11 @@ export default function HomePage() {
             {recentComplaints.map((item) => (
               <div 
                 key={item.id} 
-                className="bg-white rounded-xl border-2 border-gray-200 p-4 shadow-sm flex items-center justify-between gap-4"
+                className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col text-left">
-                    <span className="text-lg font-black text-gray-950 leading-tight">
+                    <span className="text-lg font-black text-gray-955 leading-tight">
                       {item.title}
                     </span>
                     <span className="text-xs text-gray-400 font-bold uppercase mt-1">
@@ -223,7 +223,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${getStatusBadge(item.status)}`}>
+                  <span className={`text-sm font-extrabold px-3 py-1 rounded-md border ${getStatusBadge(item.status)}`}>
                     {item.status}
                   </span>
                   <Link

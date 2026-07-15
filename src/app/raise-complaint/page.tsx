@@ -151,13 +151,13 @@ export default function RaiseComplaintPage() {
     /* Success Screen */
     return (
       <div className="flex flex-col gap-6 py-6 items-center text-center max-w-xl mx-auto">
-        <div className="w-24 h-24 bg-ash-grey/30 text-dark-teal rounded-full flex items-center justify-center text-3xl font-extrabold border-4 border-dark-teal shadow-md">
+        <div className="w-24 h-24 bg-ash-grey/30 text-dark-teal rounded-lg flex items-center justify-center text-3xl font-extrabold border-2 border-dark-teal shadow-md">
           Success
         </div>
 
         <div className="flex flex-col gap-3">
           <h2 className="text-3xl font-black text-gray-900">Complaint Raised Successfully!</h2>
-          <p className="text-xl text-dark-teal font-bold bg-beige/40 px-4 py-2.5 rounded-2xl border border-ash-grey">
+          <p className="text-xl text-dark-teal font-bold bg-beige/40 px-4 py-2.5 rounded-lg border border-ash-grey">
             Complaint Ticket: {submittedComplaint.id}
           </p>
         </div>
@@ -170,7 +170,7 @@ export default function RaiseComplaintPage() {
         <button
           type="button"
           onClick={toggleSuccessSpeech}
-          className={`py-3.5 px-6 rounded-2xl font-bold transition-all shadow flex items-center justify-center gap-2 text-base active:scale-[0.98] ${
+          className={`py-3.5 px-6 rounded-lg font-bold transition-all shadow flex items-center justify-center gap-2 text-base active:scale-[0.98] ${
             isSuccessSpeaking 
               ? 'bg-air-force hover:bg-air-force/90 text-white' 
               : 'bg-dark-teal hover:bg-dark-teal/90 text-white'
@@ -183,13 +183,13 @@ export default function RaiseComplaintPage() {
         <div className="flex flex-col sm:flex-row gap-4 w-full mt-4">
           <Link
             href="/"
-            className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-bold rounded-lg text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             Return to Dashboard
           </Link>
           <Link
             href="/complaints"
-            className="flex-1 py-4 px-6 bg-air-force hover:bg-air-force/90 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="flex-1 py-4 px-6 bg-air-force hover:bg-air-force/90 text-white font-bold rounded-lg text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             View My Grievances
           </Link>
@@ -206,7 +206,7 @@ export default function RaiseComplaintPage() {
       <div className="flex items-center gap-4">
         <Link 
           href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
+          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-lg border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
           style={{ minHeight: '56px', minWidth: '80px' }}
           title="Back to dashboard"
         >
@@ -222,7 +222,7 @@ export default function RaiseComplaintPage() {
         {/* Step 1: Select Category */}
         <div className="flex flex-col gap-4">
           <label className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">1</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-md flex items-center justify-center text-lg font-extrabold">1</span>
             Select Issue Category / തരം
           </label>
           
@@ -234,7 +234,7 @@ export default function RaiseComplaintPage() {
                   key={cat.value}
                   type="button"
                   onClick={() => setCategory(cat.value)}
-                  className={`border-3 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2.5 transition-all active:scale-[0.98] ${cat.bgColor} ${
+                  className={`border-2 rounded-lg p-5 flex flex-col items-center justify-center text-center gap-2.5 transition-all active:scale-[0.98] ${cat.bgColor} ${
                     isSelected 
                       ? 'border-dark-teal ring-4 ring-dark-teal/20 scale-[1.02]' 
                       : cat.borderColor
@@ -250,7 +250,7 @@ export default function RaiseComplaintPage() {
                     </span>
                   </div>
                   {isSelected && (
-                    <span className="mt-1 bg-dark-teal text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
+                    <span className="mt-1 bg-dark-teal text-white font-bold text-xs px-2.5 py-1 rounded-md shadow-sm">
                       Selected
                     </span>
                   )}
@@ -261,9 +261,9 @@ export default function RaiseComplaintPage() {
         </div>
 
         {/* Step 2: Grievance Details Form */}
-        <div className="flex flex-col gap-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
+        <div className="flex flex-col gap-5 bg-white rounded-lg p-6 border-2 border-gray-200 shadow-sm">
           <div className="text-2xl font-black text-gray-800 flex items-center gap-2 border-b border-gray-150 pb-3 mb-1">
-            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">2</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-md flex items-center justify-center text-lg font-extrabold">2</span>
             Fill Issue Details
           </div>
 
@@ -279,7 +279,7 @@ export default function RaiseComplaintPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Big pothole near Central Library"
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
+              className="w-full border-2 border-gray-300 rounded-lg p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
               style={{ minHeight: '56px' }}
             />
           </div>
@@ -296,7 +296,7 @@ export default function RaiseComplaintPage() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Provide details about the issue. (How long has this been occurring? Is it blocking traffic?)"
               rows={4}
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
+              className="w-full border-2 border-gray-300 rounded-lg p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
             />
           </div>
 
@@ -312,7 +312,7 @@ export default function RaiseComplaintPage() {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="e.g. Opposite GH High School, Street 4"
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
+              className="w-full border-2 border-gray-300 rounded-lg p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
               style={{ minHeight: '56px' }}
             />
           </div>
@@ -337,7 +337,7 @@ export default function RaiseComplaintPage() {
                     key={p}
                     type="button"
                     onClick={() => setPriority(p)}
-                    className={`py-3.5 px-4 rounded-xl border text-center transition-all shadow-sm font-bold text-base active:scale-[0.98] ${
+                    className={`py-3.5 px-4 rounded-lg border text-center transition-all shadow-sm font-bold text-base active:scale-[0.98] ${
                       isSel ? activeBtnStyle : 'bg-gray-50 border-gray-250 text-gray-600 hover:bg-gray-100'
                     }`}
                     style={{ minHeight: '52px' }}
@@ -354,7 +354,7 @@ export default function RaiseComplaintPage() {
         {/* Step 3: Media Upload */}
         <div className="flex flex-col gap-4">
           <div className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">3</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-md flex items-center justify-center text-lg font-extrabold">3</span>
             Attach Evidence (Photo / Voice Note)
           </div>
           <p className="text-gray-500 text-base font-semibold mt-[-6px]">
@@ -386,7 +386,7 @@ export default function RaiseComplaintPage() {
           <button
             type="submit"
             disabled={!isFormValid || isSubmitting}
-            className={`w-full py-5 px-6 font-black rounded-2xl text-center shadow transition-all text-xl flex items-center justify-center gap-2 ${
+            className={`w-full py-5 px-6 font-black rounded-lg text-center shadow transition-all text-xl flex items-center justify-center gap-2 ${
               !isFormValid
                 ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'
                 : isSubmitting
@@ -406,14 +406,14 @@ export default function RaiseComplaintPage() {
           </button>
           
           {!isFormValid && (
-            <p className="text-red-750 text-center font-bold text-base bg-red-50 py-2.5 rounded-xl border border-red-100">
+            <p className="text-red-755 text-center font-bold text-base bg-red-50 py-2.5 rounded-lg border border-red-100">
               Please fill out all required fields marked with * (Category, Title, Description, Location) to submit.
             </p>
           )}
 
           <Link
             href="/"
-            className="w-full py-4 px-6 bg-gray-150 hover:bg-gray-200 text-gray-750 font-extrabold rounded-2xl text-center border-2 border-gray-250 transition-colors text-base flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="w-full py-4 px-6 bg-gray-150 hover:bg-gray-200 text-gray-750 font-extrabold rounded-lg text-center border-2 border-gray-250 transition-colors text-base flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             Cancel & Go Back
           </Link>

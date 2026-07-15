@@ -55,7 +55,7 @@ export default function ComplaintsHistoryPage() {
         <div className="flex items-center gap-4">
           <Link 
             href="/" 
-            className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
+            className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-lg border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
             style={{ minHeight: '56px', minWidth: '80px' }}
             title="Back to home page"
           >
@@ -70,7 +70,7 @@ export default function ComplaintsHistoryPage() {
           <button
             type="button"
             onClick={clearAllHistory}
-            className="py-3 px-5 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors text-base active:scale-[0.98] self-start sm:self-center"
+            className="py-3 px-5 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-lg border-2 border-red-200 transition-colors text-base active:scale-[0.98] self-start sm:self-center"
             style={{ minHeight: '48px' }}
           >
             Clear All Records
@@ -80,7 +80,7 @@ export default function ComplaintsHistoryPage() {
 
       {complaints.length === 0 ? (
         /* Empty History State */
-        <div className="bg-white rounded-3xl border-2 border-gray-200 p-8 text-center flex flex-col items-center gap-6 shadow-sm my-6 max-w-lg mx-auto">
+        <div className="bg-white rounded-lg border-2 border-gray-200 p-8 text-center flex flex-col items-center gap-6 shadow-sm my-6 max-w-lg mx-auto">
           <div className="flex flex-col gap-2">
             <h3 className="text-2xl font-black text-gray-800">No Complaints Found</h3>
             <p className="text-gray-500 text-base leading-relaxed font-semibold">
@@ -89,7 +89,7 @@ export default function ComplaintsHistoryPage() {
           </div>
           <Link
             href="/raise-complaint"
-            className="w-full py-4 px-6 bg-dark-teal hover:bg-dark-teal/90 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="w-full py-4 px-6 bg-dark-teal hover:bg-dark-teal/90 text-white font-extrabold rounded-lg shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             File a New Complaint Now
           </Link>
@@ -105,7 +105,7 @@ export default function ComplaintsHistoryPage() {
             {complaints.map((item) => (
               <div 
                 key={item.id} 
-                className="bg-white rounded-2xl border-3 border-gray-250 p-6 shadow-sm hover:shadow-md transition-all flex flex-col gap-4"
+                className="bg-white rounded-lg border border-gray-300 p-6 shadow-sm hover:shadow-md transition-all flex flex-col gap-4"
               >
                 
                 {/* ID, Category and Status Header */}
@@ -119,7 +119,7 @@ export default function ComplaintsHistoryPage() {
                       {item.id}
                     </span>
                   </div>
-                  <span className={`text-base font-extrabold px-3.5 py-1 rounded-full border ${getStatusBadgeClass(item.status)}`}>
+                  <span className={`text-base font-extrabold px-3.5 py-1 rounded-md border ${getStatusBadgeClass(item.status)}`}>
                     {item.status}
                   </span>
                 </div>
@@ -133,7 +133,7 @@ export default function ComplaintsHistoryPage() {
                       <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
                         Captured Photo:
                       </span>
-                      <div className="relative w-full rounded-xl overflow-hidden border-2 border-gray-200 shadow-inner bg-gray-150 aspect-video">
+                      <div className="relative w-full rounded-lg overflow-hidden border-2 border-gray-200 shadow-inner bg-gray-150 aspect-video">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img 
                           src={item.photo} 
@@ -143,7 +143,7 @@ export default function ComplaintsHistoryPage() {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex flex-col gap-2 p-5 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 items-center justify-center text-center text-gray-500 font-semibold min-h-[140px]">
+                    <div className="flex flex-col gap-2 p-5 bg-gray-50 rounded-lg border border-dashed border-gray-200 items-center justify-center text-center text-gray-500 font-semibold min-h-[140px]">
                       <span>No photo attached</span>
                     </div>
                   )}
@@ -157,7 +157,7 @@ export default function ComplaintsHistoryPage() {
                         <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
                           Voice Description:
                         </span>
-                        <div className="bg-beige/40 p-3 rounded-xl border border-ash-grey flex flex-col gap-2">
+                        <div className="bg-beige/40 p-3 rounded-lg border border-ash-grey flex flex-col gap-2">
                           <audio 
                             src={item.audio} 
                             controls 
@@ -169,7 +169,7 @@ export default function ComplaintsHistoryPage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-gray-500 font-semibold text-center">
+                      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 text-gray-500 font-semibold text-center">
                         No voice description recorded
                       </div>
                     )}
@@ -178,7 +178,7 @@ export default function ComplaintsHistoryPage() {
                     {item.description && (
                       <div className="flex flex-col gap-1.5">
                         <span className="text-gray-700 font-bold text-base">Written Details:</span>
-                        <p className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-gray-700 text-base leading-relaxed italic font-medium">
+                        <p className="bg-gray-50 p-4 rounded-lg border border-gray-100 text-gray-700 text-base leading-relaxed italic font-medium">
                           "{item.description}"
                         </p>
                       </div>
