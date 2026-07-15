@@ -278,7 +278,7 @@ export default function RaiseComplaintPage() {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Big pothole near Central Library"
+              placeholder="e.g. Broken street light near Golf Links Club"
               className="w-full border-2 border-gray-300 rounded-lg p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
               style={{ minHeight: '56px' }}
             />
@@ -311,7 +311,7 @@ export default function RaiseComplaintPage() {
               required
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. Opposite GH High School, Street 4"
+              placeholder="e.g. Near Kowdiar Palace Gate, TTC Junction"
               className="w-full border-2 border-gray-300 rounded-lg p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
               style={{ minHeight: '56px' }}
             />

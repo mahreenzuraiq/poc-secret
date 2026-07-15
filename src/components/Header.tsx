@@ -8,24 +8,24 @@ export default function Header() {
   const pathname = usePathname();
 
   const getLinkClass = (path: string) => {
-    const base = "text-base font-extrabold py-2 px-3 rounded-md transition-all ";
+    const base = "text-sm font-bold py-2 px-3 transition-all ";
     if (pathname === path) {
-      return base + "bg-beige text-dark-teal shadow-sm";
+      return base + "text-dark-teal border-b-2 border-dark-teal font-extrabold rounded-none";
     }
-    return base + "text-white hover:text-beige hover:bg-white/10";
+    return base + "text-slate-650 hover:text-dark-teal hover:bg-slate-100/50 rounded-md";
   };
 
   return (
-    <header className="bg-dark-teal text-beige shadow-md border-b-4 border-air-force py-4 px-6 sticky top-0 z-50">
+    <header className="bg-white text-slate-800 shadow-xs border-b border-slate-200 py-3 px-6 sticky top-0 z-50">
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Branding */}
         <Link 
           href="/" 
-          className="flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-air-force/50 rounded-md p-1.5"
+          className="flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-air-force/20 rounded-md p-1"
         >
           <div className="flex flex-col text-left">
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-none text-white">Kowdiar Ward</h1>
-            <span className="text-ash-grey text-sm font-bold uppercase tracking-wider mt-0.5">Citizens' Portal</span>
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight leading-none text-dark-teal">Kowdiar Ward</h1>
+            <span className="text-slate-500 text-xs font-bold uppercase tracking-wider mt-0.5">Citizens' Portal</span>
           </div>
         </Link>
 

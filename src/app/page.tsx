@@ -79,123 +79,151 @@ export default function HomePage() {
   return (
     <div className="flex flex-col gap-6 py-2">
       
-      {/* 1. Welcome Card (FR-002) */}
-      <section className="bg-white border-2 border-dark-teal rounded-lg p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex flex-col">
-            <h2 className="text-2xl sm:text-3xl font-black text-ink-black">
-              Welcome, {user?.name || 'Resident'}!
-            </h2>
-            <div className="text-gray-650 text-base font-semibold mt-1 flex flex-wrap gap-x-3 gap-y-1">
-              <span><strong>Ward:</strong> {user?.ward}</span>
-              <span className="hidden sm:inline text-gray-300">|</span>
-              <span><strong>House:</strong> {user?.houseNo}</span>
-            </div>
-          </div>
+      {/* 1. Welcome Card */}
+      <section className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="text-left">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+            Welcome back, {user?.name || 'Resident'}
+          </h2>
+          <p className="text-slate-500 text-sm font-medium mt-1">
+            {user?.ward} • House No: {user?.houseNo}
+          </p>
         </div>
 
         {/* Dynamic Help Speaker button */}
         <button
           type="button"
           onClick={toggleHelpInstructions}
-          className={`py-3 px-5 rounded-lg font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
+          className={`py-2.5 px-4 rounded-lg text-sm font-semibold transition-all shadow-xs flex items-center justify-center gap-2 active:scale-[0.98] ${
             isHelpSpeaking 
-              ? 'bg-air-force hover:bg-air-force/90 text-white border border-air-force' 
-              : 'bg-dark-teal hover:bg-dark-teal/90 text-white'
+              ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300' 
+              : 'bg-dark-teal hover:bg-dark-teal/95 text-white'
           }`}
-          style={{ minHeight: '52px' }}
+          style={{ minHeight: '44px' }}
         >
           {isHelpSpeaking ? 'Stop Voice Guide' : 'Play Audio Guide'}
         </button>
       </section>
 
-      {/* 2. Complaint Statistics (FR-002) */}
+      {/* 2. Complaint Statistics */}
       <section className="grid grid-cols-3 gap-4 w-full">
         {/* Active Stats Card */}
-        <div className="bg-ash-grey/10 border-2 border-ash-grey rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-xs">
+          <span className="text-3xl font-bold text-dark-teal leading-none">
             {stats.active}
           </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
+          <span className="text-slate-500 text-xs font-bold uppercase tracking-wider mt-1.5">
             Active
           </span>
         </div>
 
         {/* Resolved Stats Card */}
-        <div className="bg-air-force/10 border-2 border-air-force rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-dark-teal leading-none">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-xs">
+          <span className="text-3xl font-bold text-slate-700 leading-none">
             {stats.resolved}
           </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
+          <span className="text-slate-500 text-xs font-bold uppercase tracking-wider mt-1.5">
             Resolved
           </span>
         </div>
 
         {/* Total Stats Card */}
-        <div className="bg-dark-teal/10 border-2 border-dark-teal rounded-lg p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-xs">
+          <span className="text-3xl font-bold text-slate-900 leading-none">
             {stats.total}
           </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
-            Total
+          <span className="text-slate-500 text-xs font-bold uppercase tracking-wider mt-1.5">
+            Total Issues
           </span>
         </div>
       </section>
 
-      {/* 3. Quick Actions Grid (FR-002) */}
+      {/* 3. Portal Actions */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
-          Quick Actions
+        <h3 className="text-sm font-bold text-slate-500 tracking-wider uppercase">
+          Portal Actions
         </h3>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
           {/* Action: Raise Complaint */}
           <Link 
             href="/raise-complaint"
-            className="flex flex-col items-center justify-center border-2 border-dark-teal hover:border-dark-teal/90 bg-dark-teal text-white rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
-            style={{ minHeight: '130px' }}
+            className="group flex flex-col justify-between bg-white border border-slate-200 hover:border-dark-teal rounded-xl p-5 transition-all shadow-xs hover:shadow-sm"
+            style={{ minHeight: '140px' }}
           >
-            <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
+            <div className="flex flex-col gap-1 text-left">
+              <span className="text-lg font-bold text-slate-900 group-hover:text-dark-teal">Report Issue</span>
+              <p className="text-slate-550 text-xs font-semibold leading-normal">
+                File a road, drainage, garbage, or streetlight grievance.
+              </p>
+            </div>
+            <span className="text-xs text-dark-teal font-extrabold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 mt-2">
+              Start Form →
+            </span>
           </Link>
 
           {/* Action: Ward Updates */}
           <Link 
             href="/updates"
-            className="flex flex-col items-center justify-center border-2 border-air-force hover:border-air-force/90 bg-air-force text-white rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-air-force/30"
-            style={{ minHeight: '130px' }}
+            className="group flex flex-col justify-between bg-white border border-slate-200 hover:border-dark-teal rounded-xl p-5 transition-all shadow-xs hover:shadow-sm"
+            style={{ minHeight: '140px' }}
           >
-            <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
+            <div className="flex flex-col gap-1 text-left">
+              <span className="text-lg font-bold text-slate-900 group-hover:text-dark-teal">Updates & Notices</span>
+              <p className="text-slate-550 text-xs font-semibold leading-normal">
+                View organic sales, medical camps, and maintenance news.
+              </p>
+            </div>
+            <span className="text-xs text-dark-teal font-extrabold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 mt-2">
+              Open Board →
+            </span>
           </Link>
 
           {/* Action: My Complaints */}
           <Link 
             href="/complaints"
-            className="flex flex-col items-center justify-center border-2 border-ash-grey hover:border-ash-grey/90 bg-ash-grey text-ink-black rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ash-grey/30"
-            style={{ minHeight: '130px' }}
+            className="group flex flex-col justify-between bg-white border border-slate-200 hover:border-dark-teal rounded-xl p-5 transition-all shadow-xs hover:shadow-sm"
+            style={{ minHeight: '140px' }}
           >
-            <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
+            <div className="flex flex-col gap-1 text-left">
+              <span className="text-lg font-bold text-slate-900 group-hover:text-dark-teal">My Grievances</span>
+              <p className="text-slate-550 text-xs font-semibold leading-normal">
+                Check progress status, tickets, and review recorded files.
+              </p>
+            </div>
+            <span className="text-xs text-dark-teal font-extrabold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 mt-2">
+              View History →
+            </span>
           </Link>
 
-          {/* Action: My Profile */}
+          {/* Action: Ward Office Bearers */}
           <Link 
-            href="/profile"
-            className="flex flex-col items-center justify-center border-2 border-ink-black hover:border-ink-black/90 bg-ink-black text-beige rounded-lg p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ink-black/30"
-            style={{ minHeight: '130px' }}
+            href="/contact"
+            className="group flex flex-col justify-between bg-white border border-slate-200 hover:border-dark-teal rounded-xl p-5 transition-all shadow-xs hover:shadow-sm"
+            style={{ minHeight: '140px' }}
           >
-            <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
+            <div className="flex flex-col gap-1 text-left">
+              <span className="text-lg font-bold text-slate-900 group-hover:text-dark-teal">Ward Directory</span>
+              <p className="text-slate-550 text-xs font-semibold leading-normal">
+                Contact details for Councillor and Health Inspectors.
+              </p>
+            </div>
+            <span className="text-xs text-dark-teal font-extrabold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 mt-2">
+              View Contacts →
+            </span>
           </Link>
         </div>
       </section>
 
-      {/* 4. Recent Complaints Section (FR-002) */}
-      <section className="flex flex-col gap-3 mt-2 border-t-2 border-gray-200 pt-5">
-        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
+      {/* 4. Recent Complaints Section */}
+      <section className="flex flex-col gap-3 mt-2 border-t border-slate-200 pt-5">
+        <h3 className="text-sm font-bold text-slate-500 tracking-wider uppercase">
           Recent Complaints
         </h3>
 
         {recentComplaints.length === 0 ? (
           /* Empty timeline fallback */
-          <div className="bg-white border-2 border-dashed border-gray-300 rounded-lg p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
+          <div className="bg-white border border-dashed border-slate-350 rounded-xl p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
             <p>You have not registered any grievances yet.</p>
             <Link 
               href="/raise-complaint"
@@ -210,7 +238,7 @@ export default function HomePage() {
             {recentComplaints.map((item) => (
               <div 
                 key={item.id} 
-                className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm flex items-center justify-between gap-4"
+                className="bg-white rounded-xl border border-slate-200 p-4 shadow-xs flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex flex-col text-left">
@@ -224,7 +252,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <span className={`text-sm font-extrabold px-3 py-1 rounded-md border ${getStatusBadge(item.status)}`}>
+                  <span className={`text-xs font-extrabold px-2.5 py-1 rounded-md border ${getStatusBadge(item.status)}`}>
                     {item.status}
                   </span>
                   <Link

@@ -57,39 +57,39 @@ export function saveComplaint(complaint: Omit<Complaint, 'id' | 'createdAt' | 's
 export const MOCK_NEWS: NewsItem[] = [
   {
     id: 'n1',
-    title: 'Grand Organic Sale at Ward Center',
-    description: 'Fresh organic farm vegetables, organic honey, and handloom clothes are available at the Ward Community Center grounds this Friday. Senior citizens receive an extra 20% discount on all purchases!',
+    title: 'Grand Organic Sale at Kowdiar Community Hall',
+    description: 'Fresh organic farm vegetables from Vattiyoorkavu, organic honey, and handloom clothes are available at the Kowdiar Community Hall grounds (near Golf Links) this Friday. Senior citizens receive an extra 20% discount on all purchases!',
     category: 'Sale',
     priority: 'Low',
     date: 'July 18, 2026',
-    location: 'Community Center Hall'
+    location: 'Kowdiar Community Hall Grounds'
   },
   {
     id: 'n2',
-    title: 'Free Health & Eye Camp for Seniors',
-    description: 'A free geriatric health and eye care check-up camp is organized by the Municipal Corporation this Saturday. Free consultations and reading glasses will be provided to attendees.',
+    title: 'Geriatric Health Camp at Jawahar Nagar Hall',
+    description: 'A free geriatric health and eye care check-up camp is organized by the Municipal Corporation at Jawahar Nagar Welfare Association Hall this Saturday. Free medical consultations and reading glasses will be provided to attendees.',
     category: 'Health',
     priority: 'High',
     date: 'July 19, 2026',
-    location: 'Primary Health Center'
+    location: 'Jawahar Nagar Association Hall'
   },
   {
     id: 'n3',
-    title: 'Road Maintenance: Ward Main Highway',
-    description: 'Pothole repairs and tarring work on the Kowdiar Main Road will commence from Tuesday morning. Traffic will be diverted through Station Road. Expected completion within 3 days.',
+    title: 'Road Tarring Work on Kowdiar Palace Road',
+    description: 'Urgent pothole repairs and tarring work on the Kowdiar Palace Road will commence from Tuesday morning. Traffic will be diverted through Golf Links Road. Expected completion within 3 days.',
     category: 'Maintenance',
     priority: 'Medium',
     date: 'July 21, 2026',
-    location: 'Main Highway (Section B)'
+    location: 'Kowdiar Palace Road (TTC Junction to Palace Gate)'
   },
   {
     id: 'n4',
-    title: 'Scheduled Water Pipe Repairs',
-    description: 'A scheduled maintenance repair on the primary water distribution pipeline will take place on Monday between 8 AM and 2 PM. Water supply will be temporarily shut off during these hours.',
+    title: 'KWA Water Pipeline Maintenance near Belhaven Hill',
+    description: 'Kerala Water Authority (KWA) scheduled maintenance repair on the primary distribution pipeline will take place near Belhaven Hill Road on Monday between 8 AM and 2 PM. Water supply will be temporarily shut off in Kowdiar and Jawahar Nagar.',
     category: 'Maintenance',
     priority: 'High',
     date: 'July 20, 2026',
-    location: 'Zone A & Zone C'
+    location: 'Belhaven Hill Road Area'
   }
 ];
 

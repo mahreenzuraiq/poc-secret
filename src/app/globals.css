@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #01161E;
+  --background: #F8FAFC;
+  --foreground: #0F172A;
 }
 
 @theme inline {
@@ -32,17 +32,17 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
 }
 
-/* Elderly-friendly dynamic font scaling (PRD: Min 18px body text) */
+/* Standard web application text scaling (Normal = 16px base) */
 html.text-size-normal {
-  font-size: 18px !important;
+  font-size: 16px !important;
 }
 
 html.text-size-large {
-  font-size: 22px !important;
+  font-size: 18px !important;
 }
 
 html.text-size-xlarge {
-  font-size: 26px !important;
+  font-size: 20px !important;
 }
 
 /* Pulsing record button animation */
