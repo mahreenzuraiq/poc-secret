@@ -192,14 +192,14 @@ export default function VoiceRecorder({
           </div>
         ) : (
           /* Start Recording Initial State */
-          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-emerald-300 bg-emerald-50/10 rounded-2xl gap-4">
-            <div className="text-emerald-800 font-bold text-lg">Tap below to record description:</div>
+          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-ash-grey bg-beige/20 rounded-2xl gap-4">
+            <div className="text-dark-teal font-bold text-lg">Tap below to record description:</div>
             
             {/* Giant Record Button */}
             <button
               type="button"
               onClick={startRecording}
-              className="w-28 h-28 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex flex-col items-center justify-center gap-1 shadow-md cursor-pointer border-4 border-white transition-transform hover:scale-105 active:scale-95"
+              className="w-28 h-28 bg-dark-teal hover:bg-dark-teal/90 text-white rounded-full flex flex-col items-center justify-center gap-1 shadow-md cursor-pointer border-4 border-white transition-transform hover:scale-105 active:scale-95"
             >
               <span className="text-sm font-bold tracking-wide">RECORD</span>
             </button>

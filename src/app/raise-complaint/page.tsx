@@ -24,49 +24,49 @@ const CATEGORIES: CategoryOption[] = [
     value: 'Road',
     label: 'Road Issue',
     description: 'Potholes, broken tar, street blockage',
-    borderColor: 'border-amber-400 hover:border-amber-550',
-    bgColor: 'bg-amber-50/50 hover:bg-amber-50',
-    textColor: 'text-amber-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   },
   {
     value: 'Water',
     label: 'Water Leak',
     description: 'Pipe leaks, drainage water, dirty supply',
-    borderColor: 'border-blue-400 hover:border-blue-550',
-    bgColor: 'bg-blue-50/50 hover:bg-blue-50',
-    textColor: 'text-blue-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   },
   {
     value: 'Garbage',
     label: 'Garbage Pile',
     description: 'Overflowing bins, uncollected street trash',
-    borderColor: 'border-red-400 hover:border-red-550',
-    bgColor: 'bg-red-50/50 hover:bg-red-50',
-    textColor: 'text-red-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   },
   {
     value: 'Electricity',
     label: 'Electricity / Light',
     description: 'Damaged street light, dangling/sparking wire',
-    borderColor: 'border-yellow-400 hover:border-yellow-550',
-    bgColor: 'bg-yellow-50/30 hover:bg-yellow-50',
-    textColor: 'text-yellow-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   },
   {
     value: 'Health',
     label: 'Health & Drainage',
     description: 'Open sewer line, stagnant water logging',
-    borderColor: 'border-emerald-400 hover:border-emerald-550',
-    bgColor: 'bg-emerald-50/50 hover:bg-emerald-50',
-    textColor: 'text-emerald-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   },
   {
     value: 'Others',
     label: 'General / Other',
     description: 'Other municipal or ward concerns',
-    borderColor: 'border-gray-400 hover:border-gray-500',
-    bgColor: 'bg-gray-50/80 hover:bg-gray-100',
-    textColor: 'text-gray-950'
+    borderColor: 'border-ash-grey hover:border-air-force',
+    bgColor: 'bg-white hover:bg-beige/10',
+    textColor: 'text-ink-black'
   }
 ];
 
@@ -151,13 +151,13 @@ export default function RaiseComplaintPage() {
     /* Success Screen */
     return (
       <div className="flex flex-col gap-6 py-6 items-center text-center max-w-xl mx-auto">
-        <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl font-extrabold border-4 border-emerald-500 shadow-md">
+        <div className="w-24 h-24 bg-ash-grey/30 text-dark-teal rounded-full flex items-center justify-center text-3xl font-extrabold border-4 border-dark-teal shadow-md">
           Success
         </div>
 
         <div className="flex flex-col gap-3">
           <h2 className="text-3xl font-black text-gray-900">Complaint Raised Successfully!</h2>
-          <p className="text-xl text-emerald-800 font-bold bg-emerald-50 px-4 py-2.5 rounded-2xl border border-emerald-200">
+          <p className="text-xl text-dark-teal font-bold bg-beige/40 px-4 py-2.5 rounded-2xl border border-ash-grey">
             Complaint Ticket: {submittedComplaint.id}
           </p>
         </div>
@@ -170,10 +170,10 @@ export default function RaiseComplaintPage() {
         <button
           type="button"
           onClick={toggleSuccessSpeech}
-          className={`py-3.5 px-6 rounded-2xl font-bold transition-all shadow flex items-center gap-2 text-base active:scale-[0.98] ${
+          className={`py-3.5 px-6 rounded-2xl font-bold transition-all shadow flex items-center justify-center gap-2 text-base active:scale-[0.98] ${
             isSuccessSpeaking 
-              ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950' 
-              : 'bg-emerald-800 hover:bg-emerald-900 text-white'
+              ? 'bg-air-force hover:bg-air-force/90 text-white' 
+              : 'bg-dark-teal hover:bg-dark-teal/90 text-white'
           }`}
           style={{ minHeight: '56px' }}
         >
@@ -189,7 +189,7 @@ export default function RaiseComplaintPage() {
           </Link>
           <Link
             href="/complaints"
-            className="flex-1 py-4 px-6 bg-emerald-700 hover:bg-emerald-850 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="flex-1 py-4 px-6 bg-air-force hover:bg-air-force/90 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             View My Grievances
           </Link>
@@ -222,7 +222,7 @@ export default function RaiseComplaintPage() {
         {/* Step 1: Select Category */}
         <div className="flex flex-col gap-4">
           <label className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">1</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">1</span>
             Select Issue Category / തരം
           </label>
           
@@ -236,13 +236,13 @@ export default function RaiseComplaintPage() {
                   onClick={() => setCategory(cat.value)}
                   className={`border-3 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2.5 transition-all active:scale-[0.98] ${cat.bgColor} ${
                     isSelected 
-                      ? 'border-emerald-600 ring-4 ring-emerald-150 scale-[1.02]' 
+                      ? 'border-dark-teal ring-4 ring-dark-teal/20 scale-[1.02]' 
                       : cat.borderColor
                   }`}
                   style={{ minHeight: '140px' }}
                 >
                   <div className="flex flex-col">
-                    <span className={`text-xl font-extrabold ${isSelected ? 'text-emerald-950 font-black' : cat.textColor}`}>
+                    <span className={`text-xl font-extrabold ${isSelected ? 'text-dark-teal font-black' : cat.textColor}`}>
                       {cat.label}
                     </span>
                     <span className="text-xs text-gray-500 font-semibold mt-1">
@@ -250,7 +250,7 @@ export default function RaiseComplaintPage() {
                     </span>
                   </div>
                   {isSelected && (
-                    <span className="mt-1 bg-emerald-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
+                    <span className="mt-1 bg-dark-teal text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
                       Selected
                     </span>
                   )}
@@ -263,7 +263,7 @@ export default function RaiseComplaintPage() {
         {/* Step 2: Grievance Details Form */}
         <div className="flex flex-col gap-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
           <div className="text-2xl font-black text-gray-800 flex items-center gap-2 border-b border-gray-150 pb-3 mb-1">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">2</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">2</span>
             Fill Issue Details
           </div>
 
@@ -327,9 +327,9 @@ export default function RaiseComplaintPage() {
                 const isSel = priority === p;
                 let activeBtnStyle = 'bg-gray-150 border-gray-300 text-gray-800';
                 if (isSel) {
-                  if (p === 'Low') activeBtnStyle = 'bg-emerald-600 border-emerald-600 text-white font-extrabold';
-                  if (p === 'Medium') activeBtnStyle = 'bg-amber-500 border-amber-600 text-emerald-950 font-extrabold';
-                  if (p === 'High') activeBtnStyle = 'bg-red-600 border-red-600 text-white font-extrabold animate-pulse';
+                  if (p === 'Low') activeBtnStyle = 'bg-ash-grey border-ash-grey text-ink-black font-extrabold';
+                  if (p === 'Medium') activeBtnStyle = 'bg-air-force border-air-force text-white font-extrabold';
+                  if (p === 'High') activeBtnStyle = 'bg-dark-teal border-dark-teal text-beige font-extrabold';
                 }
 
                 return (
@@ -354,7 +354,7 @@ export default function RaiseComplaintPage() {
         {/* Step 3: Media Upload */}
         <div className="flex flex-col gap-4">
           <div className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">3</span>
+            <span className="bg-ash-grey/30 text-dark-teal w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">3</span>
             Attach Evidence (Photo / Voice Note)
           </div>
           <p className="text-gray-500 text-base font-semibold mt-[-6px]">

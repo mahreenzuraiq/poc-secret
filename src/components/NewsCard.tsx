@@ -56,13 +56,13 @@ export default function NewsCard({ news }: NewsCardProps) {
   const getCategoryStyles = (category: string) => {
     switch (category) {
       case 'Sale':
-        return 'bg-amber-100 text-amber-900 border-amber-300';
+        return 'bg-ash-grey/25 text-ink-black border-ash-grey/55';
       case 'Health':
-        return 'bg-blue-100 text-blue-900 border-blue-300';
+        return 'bg-air-force/25 text-dark-teal border-air-force/55';
       case 'Maintenance':
-        return 'bg-orange-100 text-orange-900 border-orange-300';
+        return 'bg-dark-teal/15 text-dark-teal border-dark-teal/35';
       default:
-        return 'bg-gray-100 text-gray-900 border-gray-300';
+        return 'bg-gray-100 text-gray-800 border-gray-250';
     }
   };
 
@@ -70,16 +70,16 @@ export default function NewsCard({ news }: NewsCardProps) {
   const getPriorityBadgeClass = (priority: string) => {
     switch (priority) {
       case 'High':
-        return 'bg-red-100 text-red-850 border-red-200';
+        return 'bg-red-50 text-red-700 border-red-200';
       case 'Medium':
-        return 'bg-amber-100 text-amber-850 border-amber-200';
+        return 'bg-air-force/10 text-dark-teal border-air-force/30';
       default:
-        return 'bg-emerald-100 text-emerald-850 border-emerald-200';
+        return 'bg-ash-grey/20 text-ink-black border-ash-grey/40';
     }
   };
 
   return (
-    <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-amber-500 shadow-md ring-4 ring-amber-100' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
+    <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-air-force shadow-md ring-4 ring-air-force/10' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
@@ -111,8 +111,8 @@ export default function NewsCard({ news }: NewsCardProps) {
         onClick={toggleSpeech}
         className={`w-full py-4 px-6 rounded-xl font-bold transition-all flex items-center justify-center gap-3 text-lg active:scale-[0.98] ${
           isSpeaking 
-            ? 'bg-amber-600 hover:bg-amber-700 text-white shadow-md' 
-            : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md'
+            ? 'bg-air-force hover:bg-air-force/90 text-white shadow-md' 
+            : 'bg-dark-teal hover:bg-dark-teal/90 text-white shadow-md'
         }`}
         style={{ minHeight: '64px' }}
       >

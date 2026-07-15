@@ -40,11 +40,11 @@ export default function ComplaintsHistoryPage() {
   const getStatusBadgeClass = (status: Complaint['status']) => {
     switch (status) {
       case 'Resolved':
-        return 'bg-emerald-100 text-emerald-900 border-emerald-300';
+        return 'bg-ash-grey/30 text-ink-black border-ash-grey/60';
       case 'In Progress':
-        return 'bg-blue-100 text-blue-900 border-blue-300';
+        return 'bg-air-force/20 text-dark-teal border-air-force/40';
       default:
-        return 'bg-amber-100 text-amber-900 border-amber-300';
+        return 'bg-dark-teal/10 text-dark-teal border-dark-teal/30';
     }
   };
 
@@ -89,7 +89,7 @@ export default function ComplaintsHistoryPage() {
           </div>
           <Link
             href="/raise-complaint"
-            className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="w-full py-4 px-6 bg-dark-teal hover:bg-dark-teal/90 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             File a New Complaint Now
           </Link>
@@ -157,13 +157,13 @@ export default function ComplaintsHistoryPage() {
                         <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
                           Voice Description:
                         </span>
-                        <div className="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex flex-col gap-2">
+                        <div className="bg-beige/40 p-3 rounded-xl border border-ash-grey flex flex-col gap-2">
                           <audio 
                             src={item.audio} 
                             controls 
                             className="w-full"
                           />
-                          <span className="text-xs text-emerald-800 font-bold text-right px-1">
+                          <span className="text-xs text-dark-teal font-bold text-right px-1">
                             Duration: {item.audioDuration} seconds
                           </span>
                         </div>

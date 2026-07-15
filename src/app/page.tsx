@@ -67,11 +67,11 @@ export default function HomePage() {
   const getStatusBadge = (status: Complaint['status']) => {
     switch (status) {
       case 'Resolved':
-        return 'bg-emerald-100 text-emerald-900 border border-emerald-250';
+        return 'bg-ash-grey/30 text-ink-black border border-ash-grey/60';
       case 'In Progress':
-        return 'bg-blue-100 text-blue-900 border border-blue-250';
+        return 'bg-air-force/20 text-dark-teal border border-air-force/40';
       default:
-        return 'bg-amber-100 text-amber-900 border border-amber-250';
+        return 'bg-dark-teal/10 text-dark-teal border border-dark-teal/30';
     }
   };
 
@@ -99,8 +99,8 @@ export default function HomePage() {
           onClick={toggleHelpInstructions}
           className={`py-3 px-5 rounded-xl font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
             isHelpSpeaking 
-              ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950 border border-amber-600' 
-              : 'bg-emerald-800 hover:bg-emerald-900 text-white'
+              ? 'bg-air-force hover:bg-air-force/90 text-white border border-air-force' 
+              : 'bg-dark-teal hover:bg-dark-teal/90 text-white'
           }`}
           style={{ minHeight: '52px' }}
         >
@@ -111,8 +111,8 @@ export default function HomePage() {
       {/* 2. Complaint Statistics (FR-002) */}
       <section className="grid grid-cols-3 gap-4 w-full">
         {/* Active Stats Card */}
-        <div className="bg-amber-50/50 border-3 border-amber-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-amber-900 leading-none">
+        <div className="bg-ash-grey/10 border-3 border-ash-grey rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
             {stats.active}
           </span>
           <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
@@ -121,8 +121,8 @@ export default function HomePage() {
         </div>
 
         {/* Resolved Stats Card */}
-        <div className="bg-emerald-50/50 border-3 border-emerald-500 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-emerald-900 leading-none">
+        <div className="bg-air-force/10 border-3 border-air-force rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-dark-teal leading-none">
             {stats.resolved}
           </span>
           <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
@@ -131,8 +131,8 @@ export default function HomePage() {
         </div>
 
         {/* Total Stats Card */}
-        <div className="bg-blue-50/50 border-3 border-blue-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-blue-900 leading-none">
+        <div className="bg-dark-teal/10 border-3 border-dark-teal rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-ink-black leading-none">
             {stats.total}
           </span>
           <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
@@ -151,7 +151,7 @@ export default function HomePage() {
           {/* Action: Raise Complaint */}
           <Link 
             href="/raise-complaint"
-            className="flex flex-col items-center justify-center border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-350"
+            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/90 bg-dark-teal text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
@@ -160,7 +160,7 @@ export default function HomePage() {
           {/* Action: Ward Updates */}
           <Link 
             href="/updates"
-            className="flex flex-col items-center justify-center border-3 border-amber-500 hover:border-amber-600 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-350"
+            className="flex flex-col items-center justify-center border-3 border-air-force hover:border-air-force/90 bg-air-force text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-air-force/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
@@ -169,7 +169,7 @@ export default function HomePage() {
           {/* Action: My Complaints */}
           <Link 
             href="/complaints"
-            className="flex flex-col items-center justify-center border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-sky-350"
+            className="flex flex-col items-center justify-center border-3 border-ash-grey hover:border-ash-grey/90 bg-ash-grey text-ink-black rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ash-grey/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
@@ -178,7 +178,7 @@ export default function HomePage() {
           {/* Action: My Profile */}
           <Link 
             href="/profile"
-            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/95 bg-dark-teal hover:bg-dark-teal/95 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
+            className="flex flex-col items-center justify-center border-3 border-ink-black hover:border-ink-black/90 bg-ink-black text-beige rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-ink-black/30"
             style={{ minHeight: '130px' }}
           >
             <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
@@ -198,7 +198,7 @@ export default function HomePage() {
             <p>You have not registered any grievances yet.</p>
             <Link 
               href="/raise-complaint"
-              className="text-emerald-700 hover:underline font-bold"
+              className="text-dark-teal hover:underline font-bold"
             >
               Report a Pothole or Leak now
             </Link>
