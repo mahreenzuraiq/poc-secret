@@ -163,7 +163,7 @@ export default function RaiseComplaintPage() {
         </div>
 
         <p className="text-gray-700 text-lg leading-relaxed font-semibold">
-          Your complaint <strong>"{submittedComplaint.title}"</strong> has been saved. Our Greenfield Ward team has received the alert and will schedule inspections.
+          Your complaint <strong>"{submittedComplaint.title}"</strong> has been saved. Our Kowdiar Ward team has received the alert and will schedule inspections.
         </p>
 
         {/* Audio confirmation */}

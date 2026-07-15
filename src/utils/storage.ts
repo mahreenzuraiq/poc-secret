@@ -45,7 +45,7 @@ export function saveComplaint(complaint: Omit<Complaint, 'id' | 'createdAt' | 's
     id: 'CMP-' + Math.floor(100000 + Math.random() * 900000),
     createdAt: new Date().toISOString(),
     status: 'Received',
-    ward: 'Greenfield Ward 12'
+    ward: 'Kowdiar Ward 12'
   };
 
   const current = getComplaints();
@@ -76,7 +76,7 @@ export const MOCK_NEWS: NewsItem[] = [
   {
     id: 'n3',
     title: 'Road Maintenance: Ward Main Highway',
-    description: 'Pothole repairs and tarring work on the Greenfield Main Highway will commence from Tuesday morning. Traffic will be diverted through Station Road. Expected completion within 3 days.',
+    description: 'Pothole repairs and tarring work on the Kowdiar Main Road will commence from Tuesday morning. Traffic will be diverted through Station Road. Expected completion within 3 days.',
     category: 'Maintenance',
     priority: 'Medium',
     date: 'July 21, 2026',

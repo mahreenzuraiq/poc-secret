@@ -49,7 +49,7 @@ export default function ProfilePage() {
   };
 
   const handleLogoutClick = () => {
-    if (confirm("Are you sure you want to log out of Greenfield Ward Portal?")) {
+    if (confirm("Are you sure you want to log out of Kowdiar Ward Portal?")) {
       logout();
     }
   };
@@ -122,7 +122,7 @@ export default function ProfilePage() {
             required
             value={ward}
             onChange={(e) => setWard(e.target.value)}
-            placeholder="e.g. Greenfield Ward 12"
+            placeholder="e.g. Kowdiar Ward 12"
             className="w-full border-2 border-gray-300 rounded-lg p-4 text-lg font-bold focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all text-ink-black"
             style={{ minHeight: '56px' }}
           />

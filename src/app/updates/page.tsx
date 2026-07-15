@@ -37,7 +37,7 @@ export default function UpdatesPage() {
       </div>
 
       <p className="text-gray-550 text-base leading-relaxed font-semibold mt-[-8px]">
-        Stay updated on sales, medical camps, and maintenance schedules in Greenfield Ward. Press "Listen to News" on any card to play it out loud.
+        Stay updated on sales, medical camps, and maintenance schedules in Kowdiar Ward. Press "Listen to News" on any card to play it out loud.
       </p>
 
       {/* Grid listing */}

@@ -44,12 +44,13 @@ export default function HomePage() {
       window.speechSynthesis.cancel();
       
       const instructions = 
-        `Welcome back to WardConnect, ${user?.name || 'citizen'}. ` +
+        `Welcome back to Kowdiar Ward Citizens' Portal, ${user?.name || 'citizen'}. ` +
         `This dashboard shows your active complaints. ` +
-        `To file a new ward issue, click the green card titled Raise Complaint. ` +
-        `To view news updates and sales in your area, click the amber card titled Ward Updates. ` +
-        `To inspect all of your reported issues and play back voice notes, click the blue card titled My Complaints. ` +
-        `If you need to change your name or house number, click the teal card titled My Profile. ` +
+        `Use the navigation bar at the top to access all pages. ` +
+        `To file a new issue, click the Raise Complaint quick action card. ` +
+        `To view news updates and local sales, click the Ward Updates card. ` +
+        `To inspect all of your reported issues and voice notes, click the My Complaints card. ` +
+        `To contact your ward councillor or health inspectors, click the Contacts tab. ` +
         `Have a great day!`;
       
       const utterance = new SpeechSynthesisUtterance(instructions);
