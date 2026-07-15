@@ -66,6 +66,18 @@ export default function NewsCard({ news }: NewsCardProps) {
     }
   };
 
+  // Set priority pill colors
+  const getPriorityBadgeClass = (priority: string) => {
+    switch (priority) {
+      case 'High':
+        return 'bg-red-100 text-red-850 border-red-200';
+      case 'Medium':
+        return 'bg-amber-100 text-amber-850 border-amber-200';
+      default:
+        return 'bg-emerald-100 text-emerald-850 border-emerald-200';
+    }
+  };
+
   const categoryEmoji = (category: string) => {
     switch (category) {
       case 'Sale': return '🏷️';
@@ -78,9 +90,14 @@ export default function NewsCard({ news }: NewsCardProps) {
   return (
     <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-amber-500 shadow-md ring-4 ring-amber-100' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
-          {categoryEmoji(news.category)} {news.category}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
+            {categoryEmoji(news.category)} {news.category}
+          </span>
+          <span className={`text-xs font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${getPriorityBadgeClass(news.priority)}`}>
+            {news.priority}
+          </span>
+        </div>
         <span className="text-gray-500 text-sm font-semibold">{news.date}</span>
       </div>
 

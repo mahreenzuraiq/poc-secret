@@ -100,7 +100,7 @@ export default function ComplaintsHistoryPage() {
             </p>
           </div>
           <Link
-            href="/register"
+            href="/raise-complaint"
             className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
             ✍️ File a New Complaint Now

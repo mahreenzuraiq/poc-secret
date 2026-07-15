@@ -2,17 +2,31 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getNews, NewsItem } from '@/utils/storage';
-import NewsCard from '@/components/NewsCard';
+import { useAuth } from '@/components/AuthContext';
+import { getComplaints, Complaint } from '@/utils/storage';
 
 export default function HomePage() {
-  const [newsList, setNewsList] = useState<NewsItem[]>([]);
+  const { user } = useAuth();
+  
+  // Dashboard statistics and recent items
+  const [complaints, setComplaints] = useState<Complaint[]>([]);
+  const [stats, setStats] = useState({ active: 0, resolved: 0, total: 0 });
+  const [recentComplaints, setRecentComplaints] = useState<Complaint[]>([]);
   const [isHelpSpeaking, setIsHelpSpeaking] = useState(false);
 
   useEffect(() => {
-    setNewsList(getNews());
-    
-    // Stop any ongoing speech when page load/unload
+    const list = getComplaints();
+    setComplaints(list);
+
+    // Calculate dynamic stats
+    const total = list.length;
+    const resolved = list.filter(c => c.status === 'Resolved').length;
+    const active = total - resolved;
+    setStats({ active, resolved, total });
+
+    // Get 2 most recent complaints
+    setRecentComplaints(list.slice(0, 2));
+
     return () => {
       if (typeof window !== 'undefined') {
         window.speechSynthesis.cancel();
@@ -30,113 +44,237 @@ export default function HomePage() {
       window.speechSynthesis.cancel();
       
       const instructions = 
-        "Welcome to the Greenfield Ward Citizens Portal. " +
-        "This application is designed to help you report issues in our ward quickly. " +
-        "To register a new complaint, click the big green button that says Report a Complaint. " +
-        "To review complaints you have already submitted, click the blue button that says View My Complaints. " +
-        "You can also scroll down to read and listen to the latest announcements in our ward. " +
-        "Use the text size buttons in the header at any time to make text larger and easier to read. Thank you!";
+        `Welcome back to WardConnect, ${user?.name || 'citizen'}. ` +
+        `This dashboard shows your active complaints. ` +
+        `To file a new ward issue, click the green card titled Raise Complaint. ` +
+        `To view news updates and sales in your area, click the amber card titled Ward Updates. ` +
+        `To inspect all of your reported issues and play back voice notes, click the blue card titled My Complaints. ` +
+        `If you need to change your name or house number, click the teal card titled My Profile. ` +
+        `Have a great day!`;
       
       const utterance = new SpeechSynthesisUtterance(instructions);
       utterance.lang = 'en-US';
-      utterance.rate = 0.85; // Read slowly for elderly users
+      utterance.rate = 0.85;
 
-      utterance.onend = () => {
-        setIsHelpSpeaking(false);
-      };
-
-      utterance.onerror = () => {
-        setIsHelpSpeaking(false);
-      };
+      utterance.onend = () => setIsHelpSpeaking(false);
+      utterance.onerror = () => setIsHelpSpeaking(false);
 
       setIsHelpSpeaking(true);
       window.speechSynthesis.speak(utterance);
     }
   };
 
+  const getCategoryEmoji = (cat: Complaint['category']) => {
+    switch (cat) {
+      case 'Road': return '🛣️';
+      case 'Water': return '🚰';
+      case 'Garbage': return '🗑️';
+      case 'Electricity': return '💡';
+      case 'Health': return '🏥';
+      default: return '⚙️';
+    }
+  };
+
+  const getStatusBadge = (status: Complaint['status']) => {
+    switch (status) {
+      case 'Resolved':
+        return 'bg-emerald-100 text-emerald-900 border border-emerald-250';
+      case 'In Progress':
+        return 'bg-blue-100 text-blue-900 border border-blue-250';
+      default:
+        return 'bg-amber-100 text-amber-900 border border-amber-250';
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-8 py-2">
-      {/* Welcome & Audio Instruction Box */}
-      <section className="bg-emerald-50 border-3 border-emerald-200 rounded-3xl p-6 shadow-sm flex flex-col sm:flex-row items-center gap-6">
-        <div className="text-5xl" role="img" aria-label="elderly support">👵👴</div>
-        <div className="flex-1 text-center sm:text-left flex flex-col gap-2">
-          <h2 className="text-3xl font-black text-emerald-950">Welcome to Greenfield Ward!</h2>
-          <p className="text-emerald-800 text-lg font-medium leading-relaxed">
-            Need help using this portal? Press the button below to listen to audio instructions.
-          </p>
-          <div>
-            <button
-              type="button"
-              onClick={toggleHelpInstructions}
-              className={`mt-2 py-3 px-6 rounded-2xl font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
-                isHelpSpeaking 
-                  ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950' 
-                  : 'bg-emerald-800 hover:bg-emerald-900 text-white'
-              }`}
-              style={{ minHeight: '56px' }}
+    <div className="flex flex-col gap-6 py-2">
+      
+      {/* 1. Welcome Card (FR-002) */}
+      <section className="bg-white border-3 border-dark-teal rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4.5 text-left">
+          <div className="text-5xl" role="img" aria-label="emblem">🏛️</div>
+          <div className="flex flex-col">
+            <h2 className="text-2xl sm:text-3xl font-black text-ink-black">
+              Welcome, {user?.name || 'Resident'}!
+            </h2>
+            <div className="text-gray-650 text-base font-semibold mt-1 flex flex-wrap gap-x-3 gap-y-1">
+              <span>📍 <strong>Ward:</strong> {user?.ward}</span>
+              <span className="hidden sm:inline text-gray-300">|</span>
+              <span>🏠 <strong>House:</strong> {user?.houseNo}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Dynamic Help Speaker button */}
+        <button
+          type="button"
+          onClick={toggleHelpInstructions}
+          className={`py-3 px-5 rounded-xl font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
+            isHelpSpeaking 
+              ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950 border border-amber-600' 
+              : 'bg-emerald-800 hover:bg-emerald-900 text-white'
+          }`}
+          style={{ minHeight: '52px' }}
+        >
+          {isHelpSpeaking ? (
+            <>
+              <span>⏸️</span> Stop Voice Guide
+            </>
+          ) : (
+            <>
+              <span>🔊</span> Play Audio Guide
+            </>
+          )}
+        </button>
+      </section>
+
+      {/* 2. Complaint Statistics (FR-002) */}
+      <section className="grid grid-cols-3 gap-4 w-full">
+        {/* Active Stats Card */}
+        <div className="bg-amber-50/50 border-3 border-amber-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-amber-900 leading-none">
+            {stats.active}
+          </span>
+          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
+            Active
+          </span>
+        </div>
+
+        {/* Resolved Stats Card */}
+        <div className="bg-emerald-50/50 border-3 border-emerald-500 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-emerald-900 leading-none">
+            {stats.resolved}
+          </span>
+          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
+            Resolved
+          </span>
+        </div>
+
+        {/* Total Stats Card */}
+        <div className="bg-blue-50/50 border-3 border-blue-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
+          <span className="text-4xl sm:text-5xl font-black text-blue-900 leading-none">
+            {stats.total}
+          </span>
+          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
+            Total
+          </span>
+        </div>
+      </section>
+
+      {/* 3. Quick Actions Grid (FR-002) */}
+      <section className="flex flex-col gap-3">
+        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
+          Quick Actions
+        </h3>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+          {/* Action: Raise Complaint */}
+          <Link 
+            href="/raise-complaint"
+            className="flex flex-col items-center justify-center border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-350"
+            style={{ minHeight: '130px' }}
+          >
+            <span className="text-4xl">📝</span>
+            <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
+          </Link>
+
+          {/* Action: Ward Updates */}
+          <Link 
+            href="/updates"
+            className="flex flex-col items-center justify-center border-3 border-amber-500 hover:border-amber-600 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-350"
+            style={{ minHeight: '130px' }}
+          >
+            <span className="text-4xl">📢</span>
+            <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
+          </Link>
+
+          {/* Action: My Complaints */}
+          <Link 
+            href="/complaints"
+            className="flex flex-col items-center justify-center border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-sky-350"
+            style={{ minHeight: '130px' }}
+          >
+            <span className="text-4xl">📂</span>
+            <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
+          </Link>
+
+          {/* Action: My Profile */}
+          <Link 
+            href="/profile"
+            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/95 bg-dark-teal hover:bg-dark-teal/95 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
+            style={{ minHeight: '130px' }}
+          >
+            <span className="text-4xl">👤</span>
+            <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. Recent Complaints Section (FR-002) */}
+      <section className="flex flex-col gap-3 mt-2 border-t-2 border-gray-200 pt-5">
+        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
+          Recent Complaints
+        </h3>
+
+        {recentComplaints.length === 0 ? (
+          /* Empty timeline fallback */
+          <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
+            <span>📂</span>
+            <p>You have not registered any grievances yet.</p>
+            <Link 
+              href="/raise-complaint"
+              className="text-emerald-700 hover:underline font-bold"
             >
-              {isHelpSpeaking ? (
-                <>
-                  <span className="text-xl">⏸️</span>
-                  <span>Stop Instruction Audio</span>
-                </>
-              ) : (
-                <>
-                  <span className="text-xl">🔊</span>
-                  <span>Listen to App Instructions</span>
-                </>
-              )}
-            </button>
+              Report a Pothole or Leak now
+            </Link>
           </div>
-        </div>
+        ) : (
+          /* List timeline */
+          <div className="flex flex-col gap-4">
+            {recentComplaints.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-white rounded-xl border-2 border-gray-200 p-4 shadow-sm flex items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl bg-gray-50 p-2 rounded-xl border border-gray-150">
+                    {getCategoryEmoji(item.category)}
+                  </span>
+                  <div className="flex flex-col text-left">
+                    <span className="text-lg font-black text-gray-950 leading-tight">
+                      {item.title}
+                    </span>
+                    <span className="text-xs text-gray-400 font-bold uppercase mt-1">
+                      {item.id} • {new Date(item.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${getStatusBadge(item.status)}`}>
+                    {item.status}
+                  </span>
+                  <Link
+                    href="/complaints"
+                    className="text-gray-400 hover:text-gray-700 text-lg font-black p-2 rounded-lg"
+                    title="View details"
+                  >
+                    →
+                  </Link>
+                </div>
+              </div>
+            ))}
+
+            <Link
+              href="/complaints"
+              className="text-center font-bold text-dark-teal hover:underline text-base self-center py-2"
+            >
+              Show all complaints history ( {complaints.length} total )
+            </Link>
+          </div>
+        )}
       </section>
 
-      {/* Main Large Action Buttons */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-        {/* Report a Complaint Link */}
-        <Link 
-          href="/register"
-          className="flex items-center gap-6 border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-3xl p-8 transition-all hover:scale-[1.01] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-emerald-400 group"
-          style={{ minHeight: '160px' }}
-        >
-          <span className="text-5xl bg-white/20 p-4 rounded-2xl group-hover:scale-110 transition-transform">📝</span>
-          <div className="text-left flex flex-col gap-1">
-            <span className="text-3xl font-black tracking-tight">Report a Complaint</span>
-            <span className="text-emerald-100 text-base font-semibold leading-snug">File road potholes, water leaks, garbage issues, etc.</span>
-          </div>
-        </Link>
-
-        {/* View Complaints Link */}
-        <Link 
-          href="/complaints"
-          className="flex items-center gap-6 border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-3xl p-8 transition-all hover:scale-[1.01] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-sky-400 group"
-          style={{ minHeight: '160px' }}
-        >
-          <span className="text-5xl bg-white/20 p-4 rounded-2xl group-hover:scale-110 transition-transform">📂</span>
-          <div className="text-left flex flex-col gap-1">
-            <span className="text-3xl font-black tracking-tight">View My Complaints</span>
-            <span className="text-sky-100 text-base font-semibold leading-snug">Check the status of your reported issues and review them</span>
-          </div>
-        </Link>
-      </section>
-
-      {/* News updates section */}
-      <section className="flex flex-col gap-4 border-t-2 border-gray-200 pt-6">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-3xl font-black text-gray-900 flex items-center gap-2">
-            <span>📢</span> Ward News & Updates
-          </h2>
-        </div>
-        <p className="text-gray-500 text-base leading-relaxed mt-[-10px] font-semibold">
-          Check out what is happening in Greenfield Ward. You can play audio for any announcement card.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-          {newsList.map((news) => (
-            <NewsCard key={news.id} news={news} />
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
