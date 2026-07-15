@@ -26,10 +26,10 @@ export default function UpdatesPage() {
         <Link 
           href="/" 
           className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-          style={{ minHeight: '56px', minWidth: '56px' }}
+          style={{ minHeight: '56px', minWidth: '80px' }}
           title="Back to dashboard"
         >
-          ← Back
+          Back
         </Link>
         <h2 className="text-3xl font-black text-gray-900">
           Ward Updates & Notices

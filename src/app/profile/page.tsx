@@ -62,10 +62,10 @@ export default function ProfilePage() {
         <Link 
           href="/" 
           className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-          style={{ minHeight: '56px', minWidth: '56px' }}
+          style={{ minHeight: '56px', minWidth: '80px' }}
           title="Back to dashboard"
         >
-          ← Back
+          Back
         </Link>
         <h2 className="text-3xl font-black text-gray-900">
           My Profile Details
@@ -74,7 +74,7 @@ export default function ProfilePage() {
 
       {successMsg && (
         <div className="p-4 bg-emerald-50 border-2 border-emerald-300 text-emerald-950 font-bold rounded-2xl text-base shadow-sm">
-          ✓ {successMsg}
+          {successMsg}
         </div>
       )}
 
@@ -151,7 +151,7 @@ export default function ProfilePage() {
           disabled={!name.trim() || !ward.trim() || !houseNo.trim()}
           className="w-full mt-2 py-4.5 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-black rounded-2xl shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed"
         >
-          💾 Save Profile Changes
+          Save Profile Changes
         </button>
 
       </form>
@@ -162,7 +162,7 @@ export default function ProfilePage() {
         onClick={handleLogoutClick}
         className="w-full py-4.5 px-6 bg-red-50 hover:bg-red-100 text-red-700 font-black rounded-2xl shadow border-2 border-red-200 transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] mt-2"
       >
-        🚪 Log Out of Portal
+        Log Out of Portal
       </button>
 
     </div>

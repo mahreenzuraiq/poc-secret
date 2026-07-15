@@ -13,7 +13,6 @@ type IssuePriority = Complaint['priority'];
 interface CategoryOption {
   value: IssueCategory;
   label: string;
-  emoji: string;
   description: string;
   borderColor: string;
   bgColor: string;
@@ -24,7 +23,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Road',
     label: 'Road Issue',
-    emoji: '🛣️',
     description: 'Potholes, broken tar, street blockage',
     borderColor: 'border-amber-400 hover:border-amber-550',
     bgColor: 'bg-amber-50/50 hover:bg-amber-50',
@@ -33,7 +31,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Water',
     label: 'Water Leak',
-    emoji: '🚰',
     description: 'Pipe leaks, drainage water, dirty supply',
     borderColor: 'border-blue-400 hover:border-blue-550',
     bgColor: 'bg-blue-50/50 hover:bg-blue-50',
@@ -42,7 +39,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Garbage',
     label: 'Garbage Pile',
-    emoji: '🗑️',
     description: 'Overflowing bins, uncollected street trash',
     borderColor: 'border-red-400 hover:border-red-550',
     bgColor: 'bg-red-50/50 hover:bg-red-50',
@@ -51,7 +47,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Electricity',
     label: 'Electricity / Light',
-    emoji: '💡',
     description: 'Damaged street light, dangling/sparking wire',
     borderColor: 'border-yellow-400 hover:border-yellow-550',
     bgColor: 'bg-yellow-50/30 hover:bg-yellow-50',
@@ -60,7 +55,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Health',
     label: 'Health & Drainage',
-    emoji: '🏥',
     description: 'Open sewer line, stagnant water logging',
     borderColor: 'border-emerald-400 hover:border-emerald-550',
     bgColor: 'bg-emerald-50/50 hover:bg-emerald-50',
@@ -69,7 +63,6 @@ const CATEGORIES: CategoryOption[] = [
   {
     value: 'Others',
     label: 'General / Other',
-    emoji: '⚙️',
     description: 'Other municipal or ward concerns',
     borderColor: 'border-gray-400 hover:border-gray-500',
     bgColor: 'bg-gray-50/80 hover:bg-gray-100',
@@ -158,8 +151,8 @@ export default function RaiseComplaintPage() {
     /* Success Screen */
     return (
       <div className="flex flex-col gap-6 py-6 items-center text-center max-w-xl mx-auto">
-        <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-5xl border-4 border-emerald-500 shadow-md animate-bounce">
-          ✓
+        <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl font-extrabold border-4 border-emerald-500 shadow-md">
+          Success
         </div>
 
         <div className="flex flex-col gap-3">
@@ -184,15 +177,7 @@ export default function RaiseComplaintPage() {
           }`}
           style={{ minHeight: '56px' }}
         >
-          {isSuccessSpeaking ? (
-            <>
-              <span>⏸️</span> Stop Confirmation Voice
-            </>
-          ) : (
-            <>
-              <span>🔊</span> Listen to Confirmation
-            </>
-          )}
+          {isSuccessSpeaking ? 'Stop Confirmation Voice' : 'Listen to Confirmation'}
         </button>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full mt-4">
@@ -200,13 +185,13 @@ export default function RaiseComplaintPage() {
             href="/"
             className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
-            🏠 Return to Dashboard
+            Return to Dashboard
           </Link>
           <Link
             href="/complaints"
             className="flex-1 py-4 px-6 bg-emerald-700 hover:bg-emerald-850 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
           >
-            📂 View My Grievances
+            View My Grievances
           </Link>
         </div>
       </div>
@@ -222,10 +207,10 @@ export default function RaiseComplaintPage() {
         <Link 
           href="/" 
           className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-          style={{ minHeight: '56px', minWidth: '56px' }}
+          style={{ minHeight: '56px', minWidth: '80px' }}
           title="Back to dashboard"
         >
-          ← Back
+          Back
         </Link>
         <h2 className="text-3xl font-black text-gray-900">
           Raise a Grievance
@@ -256,7 +241,6 @@ export default function RaiseComplaintPage() {
                   }`}
                   style={{ minHeight: '140px' }}
                 >
-                  <span className="text-4xl">{cat.emoji}</span>
                   <div className="flex flex-col">
                     <span className={`text-xl font-extrabold ${isSelected ? 'text-emerald-950 font-black' : cat.textColor}`}>
                       {cat.label}
@@ -266,8 +250,8 @@ export default function RaiseComplaintPage() {
                     </span>
                   </div>
                   {isSelected && (
-                    <span className="mt-1 bg-emerald-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1">
-                      ✓ Selected
+                    <span className="mt-1 bg-emerald-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
+                      Selected
                     </span>
                   )}
                 </button>
@@ -358,9 +342,6 @@ export default function RaiseComplaintPage() {
                     }`}
                     style={{ minHeight: '52px' }}
                   >
-                    {p === 'Low' && '🟢 '}
-                    {p === 'Medium' && '🟡 '}
-                    {p === 'High' && '🔴 '}
                     {p}
                   </button>
                 );
@@ -420,15 +401,13 @@ export default function RaiseComplaintPage() {
                 <span>Submitting Grievance...</span>
               </>
             ) : (
-              <>
-                <span>🚀</span> Submit Complaint / സമർപ്പിക്കുക
-              </>
+              <span>Submit Complaint / സമർപ്പിക്കുക</span>
             )}
           </button>
           
           {!isFormValid && (
-            <p className="text-red-700 text-center font-bold text-base bg-red-50 py-2.5 rounded-xl border border-red-100">
-              ⚠️ Please fill out all required fields marked with * (Category, Title, Description, Location) to submit.
+            <p className="text-red-750 text-center font-bold text-base bg-red-50 py-2.5 rounded-xl border border-red-100">
+              Please fill out all required fields marked with * (Category, Title, Description, Location) to submit.
             </p>
           )}
 

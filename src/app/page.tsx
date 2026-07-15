@@ -64,17 +64,6 @@ export default function HomePage() {
     }
   };
 
-  const getCategoryEmoji = (cat: Complaint['category']) => {
-    switch (cat) {
-      case 'Road': return '🛣️';
-      case 'Water': return '🚰';
-      case 'Garbage': return '🗑️';
-      case 'Electricity': return '💡';
-      case 'Health': return '🏥';
-      default: return '⚙️';
-    }
-  };
-
   const getStatusBadge = (status: Complaint['status']) => {
     switch (status) {
       case 'Resolved':
@@ -91,16 +80,15 @@ export default function HomePage() {
       
       {/* 1. Welcome Card (FR-002) */}
       <section className="bg-white border-3 border-dark-teal rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4.5 text-left">
-          <div className="text-5xl" role="img" aria-label="emblem">🏛️</div>
+        <div className="flex items-center gap-4 text-left">
           <div className="flex flex-col">
             <h2 className="text-2xl sm:text-3xl font-black text-ink-black">
               Welcome, {user?.name || 'Resident'}!
             </h2>
             <div className="text-gray-650 text-base font-semibold mt-1 flex flex-wrap gap-x-3 gap-y-1">
-              <span>📍 <strong>Ward:</strong> {user?.ward}</span>
+              <span><strong>Ward:</strong> {user?.ward}</span>
               <span className="hidden sm:inline text-gray-300">|</span>
-              <span>🏠 <strong>House:</strong> {user?.houseNo}</span>
+              <span><strong>House:</strong> {user?.houseNo}</span>
             </div>
           </div>
         </div>
@@ -116,15 +104,7 @@ export default function HomePage() {
           }`}
           style={{ minHeight: '52px' }}
         >
-          {isHelpSpeaking ? (
-            <>
-              <span>⏸️</span> Stop Voice Guide
-            </>
-          ) : (
-            <>
-              <span>🔊</span> Play Audio Guide
-            </>
-          )}
+          {isHelpSpeaking ? 'Stop Voice Guide' : 'Play Audio Guide'}
         </button>
       </section>
 
@@ -171,40 +151,36 @@ export default function HomePage() {
           {/* Action: Raise Complaint */}
           <Link 
             href="/raise-complaint"
-            className="flex flex-col items-center justify-center border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-350"
+            className="flex flex-col items-center justify-center border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-350"
             style={{ minHeight: '130px' }}
           >
-            <span className="text-4xl">📝</span>
             <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
           </Link>
 
           {/* Action: Ward Updates */}
           <Link 
             href="/updates"
-            className="flex flex-col items-center justify-center border-3 border-amber-500 hover:border-amber-600 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-350"
+            className="flex flex-col items-center justify-center border-3 border-amber-500 hover:border-amber-600 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-350"
             style={{ minHeight: '130px' }}
           >
-            <span className="text-4xl">📢</span>
             <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
           </Link>
 
           {/* Action: My Complaints */}
           <Link 
             href="/complaints"
-            className="flex flex-col items-center justify-center border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-sky-350"
+            className="flex flex-col items-center justify-center border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-sky-350"
             style={{ minHeight: '130px' }}
           >
-            <span className="text-4xl">📂</span>
             <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
           </Link>
 
           {/* Action: My Profile */}
           <Link 
             href="/profile"
-            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/95 bg-dark-teal hover:bg-dark-teal/95 text-white rounded-2xl p-5 text-center gap-2.5 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
+            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/95 bg-dark-teal hover:bg-dark-teal/95 text-white rounded-2xl p-5 text-center gap-2 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
             style={{ minHeight: '130px' }}
           >
-            <span className="text-4xl">👤</span>
             <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
           </Link>
         </div>
@@ -219,7 +195,6 @@ export default function HomePage() {
         {recentComplaints.length === 0 ? (
           /* Empty timeline fallback */
           <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
-            <span>📂</span>
             <p>You have not registered any grievances yet.</p>
             <Link 
               href="/raise-complaint"
@@ -237,15 +212,12 @@ export default function HomePage() {
                 className="bg-white rounded-xl border-2 border-gray-200 p-4 shadow-sm flex items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-3xl bg-gray-50 p-2 rounded-xl border border-gray-150">
-                    {getCategoryEmoji(item.category)}
-                  </span>
                   <div className="flex flex-col text-left">
                     <span className="text-lg font-black text-gray-950 leading-tight">
                       {item.title}
                     </span>
                     <span className="text-xs text-gray-400 font-bold uppercase mt-1">
-                      {item.id} • {new Date(item.createdAt).toLocaleDateString()}
+                      {item.id} • {item.category} • {new Date(item.createdAt).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
@@ -256,10 +228,10 @@ export default function HomePage() {
                   </span>
                   <Link
                     href="/complaints"
-                    className="text-gray-400 hover:text-gray-700 text-lg font-black p-2 rounded-lg"
+                    className="text-dark-teal hover:underline text-sm font-extrabold p-2"
                     title="View details"
                   >
-                    →
+                    View Details
                   </Link>
                 </div>
               </div>

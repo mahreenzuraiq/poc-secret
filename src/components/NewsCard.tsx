@@ -78,21 +78,12 @@ export default function NewsCard({ news }: NewsCardProps) {
     }
   };
 
-  const categoryEmoji = (category: string) => {
-    switch (category) {
-      case 'Sale': return '🏷️';
-      case 'Health': return '🏥';
-      case 'Maintenance': return '🚧';
-      default: return '📢';
-    }
-  };
-
   return (
     <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-amber-500 shadow-md ring-4 ring-amber-100' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
-            {categoryEmoji(news.category)} {news.category}
+            {news.category}
           </span>
           <span className={`text-xs font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${getPriorityBadgeClass(news.priority)}`}>
             {news.priority}
@@ -106,7 +97,7 @@ export default function NewsCard({ news }: NewsCardProps) {
           {news.title}
         </h3>
         <p className="text-gray-500 text-base font-semibold flex items-center gap-1.5">
-          <span>📍</span> Location: {news.location}
+          Location: {news.location}
         </p>
       </div>
 
@@ -125,17 +116,7 @@ export default function NewsCard({ news }: NewsCardProps) {
         }`}
         style={{ minHeight: '64px' }}
       >
-        {isSpeaking ? (
-          <>
-            <span className="text-2xl animate-bounce">⏸️</span>
-            <span>Stop Reading Out Loud</span>
-          </>
-        ) : (
-          <>
-            <span className="text-2xl">🔊</span>
-            <span>Listen to News (Audio)</span>
-          </>
-        )}
+        {isSpeaking ? 'Stop Reading Out Loud' : 'Listen to News (Audio)'}
       </button>
     </div>
   );

@@ -126,7 +126,6 @@ export default function LoginPage() {
         
         {/* Portal Header */}
         <div className="flex flex-col items-center text-center gap-2">
-          <span className="text-6xl" role="img" aria-label="portal emblem">🏛️</span>
           <h2 className="text-3xl font-black text-ink-black tracking-tight">WardConnect</h2>
           <p className="text-gray-500 text-base font-bold uppercase tracking-wider">
             Ward Citizens' Portal
@@ -135,7 +134,7 @@ export default function LoginPage() {
 
         {error && (
           <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-2xl text-base font-semibold">
-            ⚠️ {error}
+            {error}
           </div>
         )}
 
@@ -183,7 +182,7 @@ export default function LoginPage() {
                   <span>Sending code...</span>
                 </>
               ) : (
-                <span>Request OTP Code →</span>
+                <span>Request OTP Code</span>
               )}
             </button>
           </form>
@@ -243,7 +242,7 @@ export default function LoginPage() {
                     onClick={handleResendOTP}
                     className="text-dark-teal hover:underline font-bold"
                   >
-                    🔄 Resend OTP Code
+                    Resend OTP Code
                   </button>
                 )}
 

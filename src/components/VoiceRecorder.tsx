@@ -127,7 +127,7 @@ export default function VoiceRecorder({
     <div className="w-full bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
       <div className="flex flex-col gap-4">
         <label className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <span>🎤</span> Voice Description / സംസാരം
+          Voice Description / സംസാരം
         </label>
         <p className="text-gray-500 text-base leading-relaxed">
           Record a voice note describing the issue. For example, explain how long the pothole has been there or if it causes blockages.
@@ -135,14 +135,14 @@ export default function VoiceRecorder({
 
         {recorderError && (
           <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-base">
-            ⚠️ {recorderError}
+            {recorderError}
           </div>
         )}
 
         {audioUrl ? (
           /* Finished Recording State */
           <div className="flex flex-col gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-150">
-            <div className="text-gray-700 font-bold text-lg">🔊 Listen to your Voice Note:</div>
+            <div className="text-gray-700 font-bold text-lg">Listen to your Voice Note:</div>
             
             <audio 
               src={audioUrl} 
@@ -160,7 +160,7 @@ export default function VoiceRecorder({
               className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors flex items-center justify-center gap-2 text-lg active:scale-[0.98]"
               style={{ minHeight: '64px' }}
             >
-              🗑 Delete & Record Again
+              Delete & Record Again
             </button>
           </div>
         ) : isRecording ? (
@@ -201,8 +201,6 @@ export default function VoiceRecorder({
               onClick={startRecording}
               className="w-28 h-28 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex flex-col items-center justify-center gap-1 shadow-md cursor-pointer border-4 border-white transition-transform hover:scale-105 active:scale-95"
             >
-              {/* Circular microphone icon */}
-              <span className="text-3xl">🎤</span>
               <span className="text-sm font-bold tracking-wide">RECORD</span>
             </button>
 
