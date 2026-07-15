@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
+import { Camera, Check, Trash2, Smartphone, Laptop, AlertTriangle } from 'lucide-react';
 
 interface CameraCaptureProps {
   onPhotoCaptured: (base64Photo: string) => void;
@@ -92,7 +93,8 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
     <div className="w-full bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
       <div className="flex flex-col gap-4">
         <label className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <span>📷</span> Issue Photo / ഫോട്ടോ എടുക്കുക
+          <Camera className="w-6 h-6 text-emerald-850 shrink-0" />
+          <span>Issue Photo / ഫോട്ടോ എടുക്കുക</span>
         </label>
         <p className="text-gray-500 text-base leading-relaxed">
           Please take a clear picture of the issue (e.g. road pothole, leaking pipe) so our team can locate it.
@@ -108,18 +110,18 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
                 alt="Captured issue" 
                 className="w-full h-full object-cover" 
               />
-              <div className="absolute top-2 right-2 bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-full text-sm shadow flex items-center gap-1">
-                ✓ Ready
+              <div className="absolute top-2 right-2 bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-full text-sm shadow flex items-center gap-1.5">
+                <Check className="w-4 h-4" /> Ready
               </div>
             </div>
             
             <button
               type="button"
               onClick={onClear}
-              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors flex items-center justify-center gap-2 text-lg active:scale-[0.98]"
+              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors flex items-center justify-center gap-2.5 text-lg active:scale-[0.98]"
               style={{ minHeight: '64px' }}
             >
-              🗑 Delete & Retake Photo
+              <Trash2 className="w-5 h-5" /> Delete & Retake Photo
             </button>
           </div>
         ) : isCameraActive ? (
@@ -141,10 +143,10 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
               <button
                 type="button"
                 onClick={capturePhoto}
-                className="flex-1 py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-colors text-lg flex items-center justify-center gap-2 active:scale-[0.98]"
+                className="flex-1 py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition-colors text-lg flex items-center justify-center gap-2.5 active:scale-[0.98]"
                 style={{ minHeight: '64px' }}
               >
-                📸 Click to Snap Photo
+                <Camera className="w-5 h-5" /> Click to Snap Photo
               </button>
               <button
                 type="button"
@@ -161,8 +163,9 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
           <div className="flex flex-col gap-4">
             {/* Show camera error warnings if user declined permissions */}
             {cameraError && (
-              <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-base">
-                ⚠️ {cameraError}
+              <div className="p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-base flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0" />
+                <span>{cameraError}</span>
               </div>
             )}
 
@@ -172,7 +175,9 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
                 className="flex flex-col items-center justify-center border-3 border-dashed border-emerald-500 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 rounded-2xl p-6 cursor-pointer text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
-                <span className="text-4xl">🤳</span>
+                <div className="p-3 bg-emerald-100 rounded-full text-emerald-800 border border-emerald-250">
+                  <Smartphone className="w-8 h-8" />
+                </div>
                 <div>
                   <div className="font-bold text-xl">Use Mobile Camera</div>
                   <div className="text-sm text-emerald-700 mt-1">Open camera and snap photo instantly</div>
@@ -193,7 +198,9 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
                 className="flex flex-col items-center justify-center border-3 border-dashed border-amber-500 hover:border-amber-600 bg-amber-50/30 hover:bg-amber-50 text-amber-800 rounded-2xl p-6 text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
-                <span className="text-4xl">💻</span>
+                <div className="p-3 bg-amber-100 rounded-full text-amber-800 border border-amber-250">
+                  <Laptop className="w-8 h-8" />
+                </div>
                 <div>
                   <div className="font-bold text-xl">Use Web Browser Cam</div>
                   <div className="text-sm text-amber-700 mt-1">Show camera preview right here on screen</div>

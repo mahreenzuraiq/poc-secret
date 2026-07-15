@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getNews, NewsItem } from '@/utils/storage';
 import NewsCard from '@/components/NewsCard';
+import { ArrowLeft } from 'lucide-react';
 
 export default function UpdatesPage() {
   const [newsList, setNewsList] = useState<NewsItem[]>([]);
@@ -25,11 +26,11 @@ export default function UpdatesPage() {
       <div className="flex items-center gap-4">
         <Link 
           href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-          style={{ minHeight: '56px', minWidth: '56px' }}
+          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center gap-1.5 active:scale-[0.95]"
+          style={{ minHeight: '56px' }}
           title="Back to dashboard"
         >
-          ← Back
+          <ArrowLeft className="w-5 h-5" /> Back
         </Link>
         <h2 className="text-3xl font-black text-gray-900">
           Ward Updates & Notices

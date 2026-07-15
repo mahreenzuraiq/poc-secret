@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NewsItem } from '@/utils/storage';
+import { Tag, Activity, Wrench, Megaphone, MapPin, Volume2, VolumeX } from 'lucide-react';
 
 interface NewsCardProps {
   news: NewsItem;
@@ -78,12 +79,12 @@ export default function NewsCard({ news }: NewsCardProps) {
     }
   };
 
-  const categoryEmoji = (category: string) => {
+  const renderCategoryIcon = (category: string, className = "w-4 h-4") => {
     switch (category) {
-      case 'Sale': return '🏷️';
-      case 'Health': return '🏥';
-      case 'Maintenance': return '🚧';
-      default: return '📢';
+      case 'Sale': return <Tag className={className} />;
+      case 'Health': return <Activity className={className} />;
+      case 'Maintenance': return <Wrench className={className} />;
+      default: return <Megaphone className={className} />;
     }
   };
 
@@ -91,22 +92,23 @@ export default function NewsCard({ news }: NewsCardProps) {
     <div className={`bg-white rounded-2xl border-3 transition-all ${isSpeaking ? 'border-amber-500 shadow-md ring-4 ring-amber-100' : 'border-gray-250 hover:border-gray-300 shadow-sm'} p-6 flex flex-col gap-4`}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className={`text-base font-bold px-3 py-1 rounded-full border ${getCategoryStyles(news.category)}`}>
-            {categoryEmoji(news.category)} {news.category}
+          <span className={`text-base font-bold px-3 py-1 rounded-full border flex items-center gap-1.5 ${getCategoryStyles(news.category)}`}>
+            {renderCategoryIcon(news.category)} <span>{news.category}</span>
           </span>
           <span className={`text-xs font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${getPriorityBadgeClass(news.priority)}`}>
             {news.priority}
           </span>
         </div>
-        <span className="text-gray-500 text-sm font-semibold">{news.date}</span>
+        <span className="text-gray-550 text-sm font-semibold">{news.date}</span>
       </div>
 
       <div className="flex flex-col gap-2">
         <h3 className="text-2xl font-extrabold text-gray-900 leading-tight">
           {news.title}
         </h3>
-        <p className="text-gray-500 text-base font-semibold flex items-center gap-1.5">
-          <span>📍</span> Location: {news.location}
+        <p className="text-gray-550 text-base font-semibold flex items-center gap-1.5">
+          <MapPin className="w-4 h-4 text-emerald-850 shrink-0" />
+          <span>Location: {news.location}</span>
         </p>
       </div>
 
@@ -127,12 +129,12 @@ export default function NewsCard({ news }: NewsCardProps) {
       >
         {isSpeaking ? (
           <>
-            <span className="text-2xl animate-bounce">⏸️</span>
+            <VolumeX className="w-5 h-5 animate-pulse" />
             <span>Stop Reading Out Loud</span>
           </>
         ) : (
           <>
-            <span className="text-2xl">🔊</span>
+            <Volume2 className="w-5 h-5" />
             <span>Listen to News (Audio)</span>
           </>
         )}

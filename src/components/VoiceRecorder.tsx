@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Mic, AlertTriangle, Volume2, Trash2, Square } from 'lucide-react';
 
 interface VoiceRecorderProps {
   onAudioRecorded: (base64Audio: string, durationSeconds: number) => void;
@@ -127,22 +128,27 @@ export default function VoiceRecorder({
     <div className="w-full bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
       <div className="flex flex-col gap-4">
         <label className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <span>🎤</span> Voice Description / സംസാരം
+          <Mic className="w-6 h-6 text-emerald-850 shrink-0" />
+          <span>Voice Description / സംസാരം</span>
         </label>
-        <p className="text-gray-500 text-base leading-relaxed">
+        <p className="text-gray-550 text-base leading-relaxed">
           Record a voice note describing the issue. For example, explain how long the pothole has been there or if it causes blockages.
         </p>
 
         {recorderError && (
-          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-base">
-            ⚠️ {recorderError}
+          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-base flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-red-700 shrink-0" />
+            <span>{recorderError}</span>
           </div>
         )}
 
         {audioUrl ? (
           /* Finished Recording State */
           <div className="flex flex-col gap-4 items-center bg-gray-50 p-4 rounded-xl border border-gray-150">
-            <div className="text-gray-700 font-bold text-lg">🔊 Listen to your Voice Note:</div>
+            <div className="text-gray-700 font-bold text-lg flex items-center gap-2">
+              <Volume2 className="w-5 h-5 text-emerald-800" />
+              <span>Listen to your Voice Note:</span>
+            </div>
             
             <audio 
               src={audioUrl} 
@@ -157,10 +163,10 @@ export default function VoiceRecorder({
             <button
               type="button"
               onClick={deleteRecording}
-              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors flex items-center justify-center gap-2 text-lg active:scale-[0.98]"
+              className="w-full max-w-xs py-4 px-6 bg-red-50 text-red-750 hover:bg-red-100 font-bold rounded-xl border-2 border-red-205 transition-colors flex items-center justify-center gap-2.5 text-lg active:scale-[0.98]"
               style={{ minHeight: '64px' }}
             >
-              🗑 Delete & Record Again
+              <Trash2 className="w-5 h-5" /> Delete & Record Again
             </button>
           </div>
         ) : isRecording ? (
@@ -199,10 +205,10 @@ export default function VoiceRecorder({
             <button
               type="button"
               onClick={startRecording}
-              className="w-28 h-28 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex flex-col items-center justify-center gap-1 shadow-md cursor-pointer border-4 border-white transition-transform hover:scale-105 active:scale-95"
+              className="w-28 h-28 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full flex flex-col items-center justify-center gap-1.5 shadow-md cursor-pointer border-4 border-white transition-transform hover:scale-105 active:scale-95"
             >
               {/* Circular microphone icon */}
-              <span className="text-3xl">🎤</span>
+              <Mic className="w-8 h-8 text-emerald-100" />
               <span className="text-sm font-bold tracking-wide">RECORD</span>
             </button>
 

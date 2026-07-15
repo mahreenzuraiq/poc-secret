@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthContext';
+import { ArrowLeft, CheckCircle2, Save, LogOut } from 'lucide-react';
 
 export default function ProfilePage() {
   const { user, updateProfile, logout } = useAuth();
@@ -61,11 +62,11 @@ export default function ProfilePage() {
       <div className="flex items-center gap-4">
         <Link 
           href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-          style={{ minHeight: '56px', minWidth: '56px' }}
+          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center gap-1.5 active:scale-[0.95]"
+          style={{ minHeight: '56px' }}
           title="Back to dashboard"
         >
-          ← Back
+          <ArrowLeft className="w-5 h-5" /> Back
         </Link>
         <h2 className="text-3xl font-black text-gray-900">
           My Profile Details
@@ -73,8 +74,9 @@ export default function ProfilePage() {
       </div>
 
       {successMsg && (
-        <div className="p-4 bg-emerald-50 border-2 border-emerald-300 text-emerald-950 font-bold rounded-2xl text-base shadow-sm">
-          ✓ {successMsg}
+        <div className="p-4 bg-emerald-50 border-2 border-emerald-300 text-emerald-950 font-bold rounded-2xl text-base shadow-sm flex items-center gap-2">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+          <span>{successMsg}</span>
         </div>
       )}
 
@@ -149,9 +151,9 @@ export default function ProfilePage() {
         <button
           type="submit"
           disabled={!name.trim() || !ward.trim() || !houseNo.trim()}
-          className="w-full mt-2 py-4.5 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-black rounded-2xl shadow-md transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed"
+          className="w-full mt-2 py-4.5 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-black rounded-2xl shadow-md transition-all text-lg flex items-center justify-center gap-2 min-h-[64px] active:scale-[0.98] disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-300 disabled:cursor-not-allowed"
         >
-          💾 Save Profile Changes
+          <Save className="w-5 h-5" /> Save Profile Changes
         </button>
 
       </form>
@@ -160,9 +162,9 @@ export default function ProfilePage() {
       <button
         type="button"
         onClick={handleLogoutClick}
-        className="w-full py-4.5 px-6 bg-red-50 hover:bg-red-100 text-red-700 font-black rounded-2xl shadow border-2 border-red-200 transition-all text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98] mt-2"
+        className="w-full py-4.5 px-6 bg-red-50 hover:bg-red-100 text-red-700 font-black rounded-2xl shadow border-2 border-red-200 transition-all text-lg flex items-center justify-center gap-2 min-h-[64px] active:scale-[0.98] mt-2"
       >
-        🚪 Log Out of Portal
+        <LogOut className="w-5 h-5" /> Log Out of Portal
       </button>
 
     </div>

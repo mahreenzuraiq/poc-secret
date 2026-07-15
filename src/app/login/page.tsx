@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/components/AuthContext';
+import { Building2, AlertTriangle, ArrowRight, RotateCcw } from 'lucide-react';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -126,7 +127,9 @@ export default function LoginPage() {
         
         {/* Portal Header */}
         <div className="flex flex-col items-center text-center gap-2">
-          <span className="text-6xl" role="img" aria-label="portal emblem">🏛️</span>
+          <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-850 border border-emerald-100 mb-2">
+            <Building2 className="w-12 h-12" />
+          </div>
           <h2 className="text-3xl font-black text-ink-black tracking-tight">WardConnect</h2>
           <p className="text-gray-500 text-base font-bold uppercase tracking-wider">
             Ward Citizens' Portal
@@ -134,8 +137,9 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-2xl text-base font-semibold">
-            ⚠️ {error}
+          <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-2xl text-base font-semibold flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-red-700 shrink-0" />
+            <span>{error}</span>
           </div>
         )}
 
@@ -183,7 +187,9 @@ export default function LoginPage() {
                   <span>Sending code...</span>
                 </>
               ) : (
-                <span>Request OTP Code →</span>
+                <span className="flex items-center gap-2">
+                  Request OTP Code <ArrowRight className="w-5 h-5" />
+                </span>
               )}
             </button>
           </form>
@@ -241,9 +247,9 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={handleResendOTP}
-                    className="text-dark-teal hover:underline font-bold"
+                    className="text-dark-teal hover:underline font-bold flex items-center gap-1.5"
                   >
-                    🔄 Resend OTP Code
+                    <RotateCcw className="w-4 h-4" /> Resend OTP Code
                   </button>
                 )}
 

@@ -3,6 +3,25 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getComplaints, Complaint } from '@/utils/storage';
+import { 
+  ArrowLeft, 
+  Trash2, 
+  FolderOpen, 
+  PlusCircle, 
+  Map, 
+  Droplet, 
+  Lightbulb, 
+  Activity, 
+  Settings, 
+  Camera, 
+  CameraOff, 
+  Volume2, 
+  MicOff, 
+  FileText, 
+  MapPin, 
+  Calendar, 
+  Trash 
+} from 'lucide-react';
 
 export default function ComplaintsHistoryPage() {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -48,14 +67,14 @@ export default function ComplaintsHistoryPage() {
     }
   };
 
-  const getCategoryEmoji = (category: Complaint['category']) => {
+  const renderCategoryIcon = (category: Complaint['category'], className = "w-6 h-6") => {
     switch (category) {
-      case 'Road': return '🛣️';
-      case 'Water': return '🚰';
-      case 'Garbage': return '🗑️';
-      case 'Electricity': return '💡';
-      case 'Health': return '🏥';
-      default: return '⚙️';
+      case 'Road': return <Map className={className} />;
+      case 'Water': return <Droplet className={className} />;
+      case 'Garbage': return <Trash2 className={className} />;
+      case 'Electricity': return <Lightbulb className={className} />;
+      case 'Health': return <Activity className={className} />;
+      default: return <Settings className={className} />;
     }
   };
 
@@ -66,11 +85,11 @@ export default function ComplaintsHistoryPage() {
         <div className="flex items-center gap-4">
           <Link 
             href="/" 
-            className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center active:scale-[0.95]"
-            style={{ minHeight: '56px', minWidth: '56px' }}
+            className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center gap-1.5 active:scale-[0.95]"
+            style={{ minHeight: '56px' }}
             title="Back to home page"
           >
-            ← Back
+            <ArrowLeft className="w-5 h-5" /> Back
           </Link>
           <h2 className="text-3xl font-black text-gray-900">
             My Complaints
@@ -81,10 +100,10 @@ export default function ComplaintsHistoryPage() {
           <button
             type="button"
             onClick={clearAllHistory}
-            className="py-3 px-5 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors text-base active:scale-[0.98] self-start sm:self-center"
+            className="py-3 px-5 bg-red-50 text-red-700 hover:bg-red-100 font-bold rounded-xl border-2 border-red-200 transition-colors text-base flex items-center justify-center gap-2 active:scale-[0.98] self-start sm:self-center"
             style={{ minHeight: '48px' }}
           >
-            🧹 Clear All Records
+            <Trash2 className="w-5 h-5" /> Clear All Records
           </button>
         )}
       </div>
@@ -92,18 +111,18 @@ export default function ComplaintsHistoryPage() {
       {complaints.length === 0 ? (
         /* Empty History State */
         <div className="bg-white rounded-3xl border-2 border-gray-200 p-8 text-center flex flex-col items-center gap-6 shadow-sm my-6 max-w-lg mx-auto">
-          <span className="text-6xl">📂</span>
+          <FolderOpen className="w-16 h-16 text-gray-400" />
           <div className="flex flex-col gap-2">
             <h3 className="text-2xl font-black text-gray-800">No Complaints Found</h3>
-            <p className="text-gray-500 text-base leading-relaxed font-semibold">
+            <p className="text-gray-550 text-base leading-relaxed font-semibold">
               You haven't reported any issues from this device yet. If you see a problem in your ward, let us know!
             </p>
           </div>
           <Link
             href="/raise-complaint"
-            className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center min-h-[64px] active:scale-[0.98]"
+            className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-2xl shadow-md transition-colors text-lg flex items-center justify-center gap-2 min-h-[64px] active:scale-[0.98]"
           >
-            ✍️ File a New Complaint Now
+            <PlusCircle className="w-5 h-5" /> File a New Complaint Now
           </Link>
         </div>
       ) : (
@@ -123,14 +142,14 @@ export default function ComplaintsHistoryPage() {
                 {/* ID, Category and Status Header */}
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-gray-100 pb-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-2xl" role="img" aria-label="category">
-                      {getCategoryEmoji(item.category)}
+                    <span className="text-emerald-800 bg-emerald-50 p-2 rounded-xl border border-emerald-100 flex items-center justify-center">
+                      {renderCategoryIcon(item.category, "w-6 h-6")}
                     </span>
                     <span className="text-xl font-black text-gray-900">
                       {item.category} Issue
                     </span>
                     <span className="text-gray-400 font-bold px-1.5">•</span>
-                    <span className="text-gray-600 font-bold text-base bg-gray-100 px-2.5 py-0.5 rounded-lg">
+                    <span className="text-gray-655 font-bold text-base bg-gray-100 px-2.5 py-0.5 rounded-lg">
                       {item.id}
                     </span>
                   </div>
@@ -146,7 +165,7 @@ export default function ComplaintsHistoryPage() {
                   {item.photo ? (
                     <div className="flex flex-col gap-2">
                       <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
-                        📸 Captured Photo:
+                        <Camera className="w-5 h-5 text-emerald-850" /> Captured Photo:
                       </span>
                       <div className="relative w-full rounded-xl overflow-hidden border-2 border-gray-200 shadow-inner bg-gray-150 aspect-video">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -159,7 +178,8 @@ export default function ComplaintsHistoryPage() {
                     </div>
                   ) : (
                     <div className="flex flex-col gap-2 p-5 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 items-center justify-center text-center text-gray-500 font-semibold min-h-[140px]">
-                      <span>📷</span> No photo attached
+                      <CameraOff className="w-10 h-10 text-gray-400 mb-1" />
+                      <span>No photo attached</span>
                     </div>
                   )}
 
@@ -170,7 +190,7 @@ export default function ComplaintsHistoryPage() {
                     {item.audio ? (
                       <div className="flex flex-col gap-2">
                         <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
-                          🔊 Voice Description:
+                          <Volume2 className="w-5 h-5 text-emerald-850" /> Voice Description:
                         </span>
                         <div className="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex flex-col gap-2">
                           <audio 
@@ -184,15 +204,18 @@ export default function ComplaintsHistoryPage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-gray-500 font-semibold text-center">
-                        🎤 No voice description recorded
+                      <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 text-gray-500 font-semibold text-center flex flex-col items-center justify-center gap-1.5">
+                        <MicOff className="w-8 h-8 text-gray-400" />
+                        <span>No voice description recorded</span>
                       </div>
                     )}
 
                     {/* Text notes */}
                     {item.description && (
                       <div className="flex flex-col gap-1.5">
-                        <span className="text-gray-700 font-bold text-base">✏️ Written Details:</span>
+                        <span className="text-gray-700 font-bold text-base flex items-center gap-1.5">
+                          <FileText className="w-5 h-5 text-gray-700" /> Written Details:
+                        </span>
                         <p className="bg-gray-50 p-4 rounded-xl border border-gray-100 text-gray-700 text-base leading-relaxed italic font-medium">
                           "{item.description}"
                         </p>
@@ -200,9 +223,15 @@ export default function ComplaintsHistoryPage() {
                     )}
 
                     {/* General details */}
-                    <div className="text-gray-500 text-sm font-semibold flex flex-col gap-1 mt-2 border-t border-gray-100 pt-3">
-                      <div>📍 Location: {item.ward}</div>
-                      <div>📅 Submitted: {formatDate(item.createdAt)}</div>
+                    <div className="text-gray-500 text-sm font-semibold flex flex-col gap-1.5 mt-2 border-t border-gray-100 pt-3">
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-gray-400" />
+                        <span>Location: {item.ward}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4 text-gray-400" />
+                        <span>Submitted: {formatDate(item.createdAt)}</span>
+                      </div>
                     </div>
 
                   </div>
@@ -216,7 +245,7 @@ export default function ComplaintsHistoryPage() {
                     className="py-2.5 px-4 bg-red-50 text-red-750 hover:bg-red-100 font-bold rounded-lg border border-red-200 text-base transition-colors flex items-center gap-1.5 active:scale-[0.98]"
                     style={{ minHeight: '44px' }}
                   >
-                    🗑 Delete Record
+                    <Trash className="w-4 h-4" /> Delete Record
                   </button>
                 </div>
 

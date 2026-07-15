@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import Link from 'next/link';
+import { Building2 } from 'lucide-react';
 
 export default function Header() {
   const { textSize, setTextSize } = useTheme();
@@ -15,7 +16,7 @@ export default function Header() {
           href="/" 
           className="flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-amber-300 rounded-xl p-1.5"
         >
-          <span className="text-4xl" aria-hidden="true">🏛️</span>
+          <Building2 className="w-9 h-9 text-amber-300" aria-hidden="true" />
           <div className="flex flex-col text-left">
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-none">Greenfield Ward</h1>
             <span className="text-amber-300 text-sm font-bold uppercase tracking-wider mt-0.5">Citizens' Portal</span>
