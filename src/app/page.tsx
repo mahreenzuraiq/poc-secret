@@ -4,30 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthContext';
 import { getComplaints, Complaint } from '@/utils/storage';
-import { 
-  Building2, 
-  MapPin, 
-  Home, 
-  Volume2, 
-  VolumeX, 
-  Map, 
-  Droplet, 
-  Trash2, 
-  Lightbulb, 
-  Activity, 
-  Settings, 
-  PlusCircle, 
-  Megaphone, 
-  FolderOpen, 
-  User, 
-  ArrowRight, 
-  Inbox 
+import {
+  MapPin, Home, Volume2, VolumeX,
+  Map, Droplet, Trash2, Lightbulb, Activity, Settings,
+  PlusCircle, Megaphone, FolderOpen, User, ArrowRight, Inbox,
+  CheckCircle, Clock, AlertCircle
 } from 'lucide-react';
 
 export default function HomePage() {
   const { user } = useAuth();
-  
-  // Dashboard statistics and recent items
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [stats, setStats] = useState({ active: 0, resolved: 0, total: 0 });
   const [recentComplaints, setRecentComplaints] = useState<Complaint[]>([]);
@@ -36,262 +21,267 @@ export default function HomePage() {
   useEffect(() => {
     const list = getComplaints();
     setComplaints(list);
-
-    // Calculate dynamic stats
-    const total = list.length;
     const resolved = list.filter(c => c.status === 'Resolved').length;
-    const active = total - resolved;
-    setStats({ active, resolved, total });
-
-    // Get 2 most recent complaints
-    setRecentComplaints(list.slice(0, 2));
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.speechSynthesis.cancel();
-      }
-    };
+    setStats({ active: list.length - resolved, resolved, total: list.length });
+    setRecentComplaints(list.slice(0, 3));
+    return () => { if (typeof window !== 'undefined') window.speechSynthesis.cancel(); };
   }, []);
 
   const toggleHelpInstructions = () => {
     if (typeof window === 'undefined') return;
-
     if (isHelpSpeaking) {
       window.speechSynthesis.cancel();
       setIsHelpSpeaking(false);
     } else {
       window.speechSynthesis.cancel();
-      
-      const instructions = 
-        `Welcome back to WardConnect, ${user?.name || 'citizen'}. ` +
-        `This dashboard shows your active complaints. ` +
-        `To file a new ward issue, click the green card titled Raise Complaint. ` +
-        `To view news updates and sales in your area, click the amber card titled Ward Updates. ` +
-        `To inspect all of your reported issues and play back voice notes, click the blue card titled My Complaints. ` +
-        `If you need to change your name or house number, click the teal card titled My Profile. ` +
-        `Have a great day!`;
-      
-      const utterance = new SpeechSynthesisUtterance(instructions);
+      const utterance = new SpeechSynthesisUtterance(
+        `Welcome to WardConnect, ${user?.name || 'citizen'}. ` +
+        `Use Services tab to report a new issue. ` +
+        `Check your complaints in My Grievances. ` +
+        `Contact your ward office through the Chat tab.`
+      );
       utterance.lang = 'en-US';
       utterance.rate = 0.85;
-
       utterance.onend = () => setIsHelpSpeaking(false);
       utterance.onerror = () => setIsHelpSpeaking(false);
-
       setIsHelpSpeaking(true);
       window.speechSynthesis.speak(utterance);
     }
   };
 
-  const renderCategoryIcon = (cat: Complaint['category'], className = "w-6 h-6") => {
+  const renderCategoryIcon = (cat: Complaint['category'], size = 'w-5 h-5') => {
     switch (cat) {
-      case 'Road': return <Map className={className} />;
-      case 'Water': return <Droplet className={className} />;
-      case 'Garbage': return <Trash2 className={className} />;
-      case 'Electricity': return <Lightbulb className={className} />;
-      case 'Health': return <Activity className={className} />;
-      default: return <Settings className={className} />;
+      case 'Road':        return <Map className={size} />;
+      case 'Water':       return <Droplet className={size} />;
+      case 'Garbage':     return <Trash2 className={size} />;
+      case 'Electricity': return <Lightbulb className={size} />;
+      case 'Health':      return <Activity className={size} />;
+      default:            return <Settings className={size} />;
     }
   };
 
-  const getStatusBadge = (status: Complaint['status']) => {
-    switch (status) {
-      case 'Resolved':
-        return 'bg-emerald-100 text-emerald-900 border border-emerald-250';
-      case 'In Progress':
-        return 'bg-blue-100 text-blue-900 border border-blue-250';
-      default:
-        return 'bg-amber-100 text-amber-900 border border-amber-250';
+  const getCategoryStyle = (cat: Complaint['category']) => {
+    switch (cat) {
+      case 'Road':        return { bg: '#FFF8E1', color: '#F57F17' };
+      case 'Water':       return { bg: '#E3F2FD', color: '#1976D2' };
+      case 'Garbage':     return { bg: '#E8F5E9', color: '#2E7D32' };
+      case 'Electricity': return { bg: '#FFFDE7', color: '#F9A825' };
+      case 'Health':      return { bg: '#FCE4EC', color: '#C2185B' };
+      default:            return { bg: '#F3E5F5', color: '#7B1FA2' };
     }
   };
+
+  const getStatusChip = (status: Complaint['status']) => {
+    switch (status) {
+      case 'Resolved':    return { bg: '#E8F5E9', color: '#2E7D32', icon: <CheckCircle className="w-3 h-3" /> };
+      case 'In Progress': return { bg: '#FFF8E1', color: '#F57F17', icon: <Clock className="w-3 h-3" /> };
+      default:            return { bg: '#E3F2FD', color: '#1976D2', icon: <AlertCircle className="w-3 h-3" /> };
+    }
+  };
+
+  const QUICK_ACTIONS = [
+    {
+      href: '/raise-complaint',
+      label: 'Report Issue',
+      description: 'Road, water, garbage, electricity',
+      icon: PlusCircle,
+      iconBg: '#E8F5E9',
+      iconColor: '#2E7D32',
+    },
+    {
+      href: '/updates',
+      label: 'Updates',
+      description: 'Notices & ward news',
+      icon: Megaphone,
+      iconBg: '#FFF8E1',
+      iconColor: '#F57F17',
+    },
+    {
+      href: '/complaints',
+      label: 'My Grievances',
+      description: 'Track reported issues',
+      icon: FolderOpen,
+      iconBg: '#E3F2FD',
+      iconColor: '#1976D2',
+    },
+    {
+      href: '/contact',
+      label: 'Ward Directory',
+      description: 'Contacts & helplines',
+      icon: User,
+      iconBg: '#E0F2F1',
+      iconColor: '#00897B',
+    },
+  ];
 
   return (
-    <div className="flex flex-col gap-6 py-2">
-      
-      {/* 1. Welcome Card (FR-002) */}
-      <section className="bg-white border-3 border-dark-teal rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="flex items-center gap-4.5 text-left">
-          <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-850 border border-emerald-100">
-            <Building2 className="w-10 h-10" />
+    <div className="flex flex-col gap-5">
+
+      {/* ── Welcome Card ── */}
+      <section
+        className="rounded-3xl p-5 flex items-start justify-between gap-4"
+        style={{ background: '#E8F5E9' }}
+      >
+        <div className="flex items-center gap-3.5">
+          <div
+            className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+            style={{ background: '#fff' }}
+          >
+            <Home className="w-6 h-6" style={{ color: '#2E7D32' }} strokeWidth={2} />
           </div>
-          <div className="flex flex-col">
-            <h2 className="text-2xl sm:text-3xl font-black text-ink-black">
-              Welcome, {user?.name || 'Resident'}!
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-0.5" style={{ color: '#43A047' }}>
+              Good day
+            </p>
+            <h2 className="text-xl font-bold leading-tight" style={{ color: '#1F2937', fontSize: '20px' }}>
+              {user?.name || 'Resident'}
             </h2>
-            <div className="text-gray-650 text-base font-semibold mt-1 flex flex-wrap gap-x-3 gap-y-1">
-              <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-emerald-850" /> <strong>Ward:</strong> {user?.ward}</span>
-              <span className="hidden sm:inline text-gray-300">|</span>
-              <span className="flex items-center gap-1"><Home className="w-4 h-4 text-emerald-850" /> <strong>House:</strong> {user?.houseNo}</span>
+            <div className="flex items-center gap-1.5 mt-0.5 text-xs font-medium" style={{ color: '#6B7280' }}>
+              <MapPin className="w-3.5 h-3.5" style={{ color: '#43A047' }} />
+              <span>Ward {user?.ward} · House {user?.houseNo}</span>
             </div>
           </div>
         </div>
 
-        {/* Dynamic Help Speaker button */}
+        {/* Voice guide button */}
         <button
           type="button"
           onClick={toggleHelpInstructions}
-          className={`py-3 px-5 rounded-xl font-bold transition-all shadow flex items-center justify-center gap-2.5 text-base active:scale-[0.98] ${
-            isHelpSpeaking 
-              ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950 border border-amber-600' 
-              : 'bg-emerald-800 hover:bg-emerald-900 text-white'
-          }`}
-          style={{ minHeight: '52px' }}
+          className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all"
+          style={{
+            background: isHelpSpeaking ? '#fff3' : '#2E7D32',
+            color: '#fff',
+            boxShadow: '0 2px 8px rgba(46,125,50,0.25)',
+          }}
+          aria-label={isHelpSpeaking ? 'Stop voice guide' : 'Play voice guide'}
         >
-          {isHelpSpeaking ? (
-            <>
-              <VolumeX className="w-5 h-5" /> Stop Voice Guide
-            </>
-          ) : (
-            <>
-              <Volume2 className="w-5 h-5" /> Play Audio Guide
-            </>
-          )}
+          {isHelpSpeaking ? <VolumeX className="w-4.5 h-4.5" /> : <Volume2 className="w-4.5 h-4.5" />}
         </button>
       </section>
 
-      {/* 2. Complaint Statistics (FR-002) */}
-      <section className="grid grid-cols-3 gap-4 w-full">
-        {/* Active Stats Card */}
-        <div className="bg-amber-50/50 border-3 border-amber-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-amber-900 leading-none">
-            {stats.active}
-          </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
-            Active
-          </span>
-        </div>
-
-        {/* Resolved Stats Card */}
-        <div className="bg-emerald-50/50 border-3 border-emerald-500 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-emerald-900 leading-none">
-            {stats.resolved}
-          </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
-            Resolved
-          </span>
-        </div>
-
-        {/* Total Stats Card */}
-        <div className="bg-blue-50/50 border-3 border-blue-400 rounded-2xl p-4 sm:p-5 flex flex-col items-center justify-center text-center shadow-sm">
-          <span className="text-4xl sm:text-5xl font-black text-blue-900 leading-none">
-            {stats.total}
-          </span>
-          <span className="text-gray-650 text-base font-extrabold mt-2 uppercase tracking-wide">
-            Total
-          </span>
-        </div>
+      {/* ── Stats Row ── */}
+      <section className="grid grid-cols-3 gap-3">
+        {[
+          { label: 'Active', value: stats.active, color: '#1976D2', bg: '#E3F2FD' },
+          { label: 'In Progress', value: stats.total - stats.active - stats.resolved, color: '#F57F17', bg: '#FFF8E1' },
+          { label: 'Resolved', value: stats.resolved, color: '#2E7D32', bg: '#E8F5E9' },
+        ].map(s => (
+          <div
+            key={s.label}
+            className="flex flex-col items-center text-center py-4 px-2 rounded-2xl"
+            style={{ background: s.bg }}
+          >
+            <span className="text-2xl font-bold leading-none" style={{ color: s.color }}>{s.value}</span>
+            <span className="text-xs font-semibold mt-1" style={{ color: s.color, opacity: 0.8 }}>{s.label}</span>
+          </div>
+        ))}
       </section>
 
-      {/* 3. Quick Actions Grid (FR-002) */}
+      {/* ── Quick Actions ── */}
       <section className="flex flex-col gap-3">
-        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
+        <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: '#9CA3AF' }}>
           Quick Actions
         </h3>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-          {/* Action: Raise Complaint */}
-          <Link 
-            href="/raise-complaint"
-            className="flex flex-col items-center justify-center border-3 border-emerald-500 hover:border-emerald-600 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl p-5 text-center gap-3 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-350"
-            style={{ minHeight: '130px' }}
-          >
-            <PlusCircle className="w-10 h-10 text-emerald-100" />
-            <span className="text-lg font-black tracking-tight leading-tight">Raise Complaint</span>
-          </Link>
-
-          {/* Action: Ward Updates */}
-          <Link 
-            href="/updates"
-            className="flex flex-col items-center justify-center border-3 border-amber-500 hover:border-amber-600 bg-amber-500 hover:bg-amber-600 text-emerald-950 rounded-2xl p-5 text-center gap-3 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-amber-350"
-            style={{ minHeight: '130px' }}
-          >
-            <Megaphone className="w-10 h-10 text-emerald-950" />
-            <span className="text-lg font-black tracking-tight leading-tight">Ward Updates</span>
-          </Link>
-
-          {/* Action: My Complaints */}
-          <Link 
-            href="/complaints"
-            className="flex flex-col items-center justify-center border-3 border-sky-500 hover:border-sky-600 bg-sky-600 hover:bg-sky-700 text-white rounded-2xl p-5 text-center gap-3 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-sky-350"
-            style={{ minHeight: '130px' }}
-          >
-            <FolderOpen className="w-10 h-10 text-sky-100" />
-            <span className="text-lg font-black tracking-tight leading-tight">My Complaints</span>
-          </Link>
-
-          {/* Action: My Profile */}
-          <Link 
-            href="/profile"
-            className="flex flex-col items-center justify-center border-3 border-dark-teal hover:border-dark-teal/95 bg-dark-teal hover:bg-dark-teal/95 text-white rounded-2xl p-5 text-center gap-3 transition-all hover:scale-[1.02] shadow-sm focus:outline-none focus:ring-4 focus:ring-dark-teal/30"
-            style={{ minHeight: '130px' }}
-          >
-            <User className="w-10 h-10 text-emerald-100" />
-            <span className="text-lg font-black tracking-tight leading-tight">My Profile</span>
-          </Link>
+        <div className="grid grid-cols-2 gap-3">
+          {QUICK_ACTIONS.map(({ href, label, description, icon: Icon, iconBg, iconColor }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group flex flex-col gap-3 rounded-2xl p-4 transition-all active:scale-[0.97]"
+              style={{
+                background: '#fff',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                minHeight: '120px',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.10)')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)')}
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: iconBg }}
+              >
+                <Icon className="w-5 h-5" style={{ color: iconColor }} strokeWidth={2} />
+              </div>
+              <div>
+                <p className="text-sm font-bold" style={{ color: '#1F2937' }}>{label}</p>
+                <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{description}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* 4. Recent Complaints Section (FR-002) */}
-      <section className="flex flex-col gap-3 mt-2 border-t-2 border-gray-200 pt-5">
-        <h3 className="text-xl font-bold text-gray-900 tracking-wide uppercase">
-          Recent Complaints
-        </h3>
+      {/* ── Recent Complaints ── */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-bold uppercase tracking-wider" style={{ color: '#9CA3AF' }}>
+            Recent Complaints
+          </h3>
+          {complaints.length > 0 && (
+            <Link href="/complaints" className="text-xs font-semibold flex items-center gap-1" style={{ color: '#2E7D32' }}>
+              See all <ArrowRight className="w-3 h-3" />
+            </Link>
+          )}
+        </div>
 
         {recentComplaints.length === 0 ? (
-          /* Empty timeline fallback */
-          <div className="bg-white border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center text-gray-500 font-semibold flex flex-col items-center gap-2">
-            <Inbox className="w-10 h-10 text-gray-400" />
-            <p>You have not registered any grievances yet.</p>
-            <Link 
-              href="/raise-complaint"
-              className="text-emerald-700 hover:underline font-bold"
+          <div
+            className="flex flex-col items-center gap-3 py-8 rounded-2xl text-center"
+            style={{ background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+          >
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center"
+              style={{ background: '#F2F4F3' }}
             >
-              Report a Pothole or Leak now
+              <Inbox className="w-7 h-7" style={{ color: '#9CA3AF' }} />
+            </div>
+            <div>
+              <p className="font-semibold text-sm" style={{ color: '#1F2937' }}>No complaints yet</p>
+              <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Spotted a local issue? Report it now.</p>
+            </div>
+            <Link
+              href="/raise-complaint"
+              className="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
+              style={{ background: '#2E7D32', color: '#fff', boxShadow: '0 2px 8px rgba(46,125,50,0.25)' }}
+            >
+              <PlusCircle className="w-4 h-4" /> Report an Issue
             </Link>
           </div>
         ) : (
-          /* List timeline */
-          <div className="flex flex-col gap-4">
-            {recentComplaints.map((item) => (
-              <div 
-                key={item.id} 
-                className="bg-white rounded-xl border-2 border-gray-250 p-4 shadow-sm flex items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-emerald-800 bg-emerald-50 p-2.5 rounded-xl border border-emerald-100">
-                    {renderCategoryIcon(item.category, "w-6 h-6")}
-                  </span>
-                  <div className="flex flex-col text-left">
-                    <span className="text-lg font-black text-gray-950 leading-tight">
-                      {item.title}
-                    </span>
-                    <span className="text-xs text-gray-400 font-bold uppercase mt-1">
-                      {item.id} • {new Date(item.createdAt).toLocaleDateString()}
+          <div className="flex flex-col gap-2.5">
+            {recentComplaints.map(item => {
+              const catStyle = getCategoryStyle(item.category);
+              const statusStyle = getStatusChip(item.status);
+              return (
+                <div
+                  key={item.id}
+                  className="flex items-center gap-3 rounded-2xl p-4"
+                  style={{ background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: catStyle.bg }}
+                  >
+                    <span style={{ color: catStyle.color }}>
+                      {renderCategoryIcon(item.category)}
                     </span>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <span className={`text-sm font-extrabold px-3 py-1 rounded-full border ${getStatusBadge(item.status)}`}>
-                    {item.status}
-                  </span>
-                  <Link
-                    href="/complaints"
-                    className="text-gray-400 hover:text-gray-700 p-2 rounded-lg flex items-center justify-center transition-colors"
-                    title="View details"
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold truncate" style={{ color: '#1F2937' }}>{item.title}</p>
+                    <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>
+                      {item.category} · {new Date(item.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                    </p>
+                  </div>
+                  <div
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold shrink-0"
+                    style={{ background: statusStyle.bg, color: statusStyle.color }}
                   >
-                    <ArrowRight className="w-5 h-5" />
-                  </Link>
+                    {statusStyle.icon}
+                    {item.status}
+                  </div>
                 </div>
-              </div>
-            ))}
-
-            <Link
-              href="/complaints"
-              className="text-center font-bold text-dark-teal hover:underline text-base self-center py-2"
-            >
-              Show all complaints history ( {complaints.length} total )
-            </Link>
+              );
+            })}
           </div>
         )}
       </section>

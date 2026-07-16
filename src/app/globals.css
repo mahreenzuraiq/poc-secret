@@ -1,62 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #EFF6E0;
-  --foreground: #01161E;
+  --background: #F7F9F7;
+  --foreground: #1F2937;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-noto-sans);
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-mono: var(--font-geist-mono);
-  
-  /* WardConnect Design System Colors */
-  --color-ink-black: #01161E;
-  --color-dark-teal: #124559;
-  --color-air-force: #598392;
-  --color-ash-grey: #AEC3B0;
-  --color-beige: #EFF6E0;
+
+  /* === PRD Primary Palette === */
+  --color-primary:           #2E7D32;
+  --color-primary-hover:     #256328;
+  --color-primary-container: #E8F5E9;
+  --color-on-primary:        #FFFFFF;
+
+  --color-secondary:           #43A047;
+  --color-secondary-container: #F1F8E9;
+
+  --color-accent:           #00897B;
+  --color-accent-container: #E0F2F1;
+
+  /* === PRD Neutral Palette === */
+  --color-surface:         #FFFFFF;
+  --color-surface-variant: #F2F4F3;
+  --color-border:          #E5E7EB;
+  --color-divider:         #ECEFF1;
+
+  /* === PRD Text Colors === */
+  --color-text-primary:   #1F2937;
+  --color-text-secondary: #6B7280;
+  --color-text-muted:     #9CA3AF;
+  --color-text-disabled:  #CBD5E1;
+
+  /* === PRD Semantic Colors === */
+  --color-success:           #2E7D32;
+  --color-success-container: #E8F5E9;
+  --color-warning:           #F9A825;
+  --color-warning-container: #FFF8E1;
+  --color-error:             #D32F2F;
+  --color-error-container:   #FFEBEE;
+  --color-info:              #1976D2;
+  --color-info-container:    #E3F2FD;
+
+  /* === Status Colors === */
+  --color-status-open:        #1976D2;
+  --color-status-open-bg:     #E3F2FD;
+  --color-status-assigned:    #7B1FA2;
+  --color-status-assigned-bg: #F3E5F5;
+  --color-status-progress:    #F57F17;
+  --color-status-progress-bg: #FFF8E1;
+  --color-status-resolved:    #2E7D32;
+  --color-status-resolved-bg: #E8F5E9;
+  --color-status-rejected:    #D32F2F;
+  --color-status-rejected-bg: #FFEBEE;
+
+  /* === Legacy color aliases (backward-compat with existing page code) === */
+  --color-ink-black: #1F2937;
+  --color-dark-teal: #2E7D32;
+  --color-air-force: #43A047;
+  --color-ash-grey:  #9CA3AF;
+  --color-beige:     #F2F4F3;
+
+  /* === PRD Corner Radius === */
+  --radius-sm:    12px;
+  --radius-md:    16px;
+  --radius-lg:    20px;
+  --radius-xl:    24px;
+  --radius-sheet: 32px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #01161E;
-    --foreground: #EFF6E0;
-  }
-}
-
+/* ============================================================
+   BASE
+   ============================================================ */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Elderly-friendly dynamic font scaling (PRD: Min 18px body text) */
-html.text-size-normal {
-  font-size: 18px !important;
+/* Typography — components own their own sizes */
+
+/* ============================================================
+   TEXT SIZE ACCESSIBILITY
+   ============================================================ */
+html.text-size-normal  { font-size: 16px !important; }
+html.text-size-large   { font-size: 18px !important; }
+html.text-size-xlarge  { font-size: 20px !important; }
+
+/* ============================================================
+   COMPONENT UTILITIES
+   ============================================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 24px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease, box-shadow 150ms ease;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.25);
+}
+.btn-primary:hover   { background: var(--color-primary-hover); box-shadow: 0 4px 12px rgba(46,125,50,0.30); }
+.btn-primary:active  { transform: scale(0.98); }
+.btn-primary:disabled { background: var(--color-text-disabled); box-shadow: none; cursor: not-allowed; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 24px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease;
+}
+.btn-secondary:hover  { background: var(--color-primary-container); }
+.btn-secondary:active { transform: scale(0.98); }
+
+.card {
+  background: var(--color-surface);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
 }
 
-html.text-size-large {
-  font-size: 22px !important;
+/* Status Chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.chip-open     { background: var(--color-status-open-bg);     color: var(--color-status-open);     }
+.chip-assigned { background: var(--color-status-assigned-bg); color: var(--color-status-assigned); }
+.chip-progress { background: var(--color-status-progress-bg); color: var(--color-status-progress); }
+.chip-resolved { background: var(--color-status-resolved-bg); color: var(--color-status-resolved); }
+.chip-rejected { background: var(--color-status-rejected-bg); color: var(--color-status-rejected); }
+
+.input-base {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--color-surface-variant);
+  border: 2px solid var(--color-border);
+  border-radius: 16px;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  min-height: 52px;
+}
+.input-base:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(46,125,50,0.12);
 }
 
-html.text-size-xlarge {
-  font-size: 26px !important;
+/* ============================================================
+   BOTTOM NAVIGATION
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: stretch;
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Pulsing record button animation */
+.bottom-nav-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 150ms ease;
+  text-decoration: none;
+  position: relative;
+}
+
+.bottom-nav-tab.active {
+  color: var(--color-primary);
+}
+
+.bottom-nav-tab.active::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 32px;
+  background: var(--color-primary-container);
+  border-radius: 999px;
+  z-index: -1;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
 @keyframes pulse-record {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
-  }
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 0  rgba(211,47,47,0.7); }
+  50%       { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(211,47,47,0); }
 }
+.animate-pulse-record { animation: pulse-record 1.5s infinite; }
 
-.animate-pulse-record {
-  animation: pulse-record 1.5s infinite;
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in { animation: fade-in 250ms ease forwards; }
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slide-up 250ms ease forwards; }
+
+@keyframes check-pop {
+  0%   { transform: scale(0);    opacity: 0; }
+  70%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.animate-check-pop { animation: check-pop 350ms cubic-bezier(0.34,1.56,0.64,1) forwards; }
+

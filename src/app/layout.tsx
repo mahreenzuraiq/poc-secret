@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
 import "./globals.css";
 import PWARegister from "@/components/PWARegister";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 import Header from "@/components/Header";
-
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-});
+import BottomNav from "@/components/BottomNav";
 
 export const metadata: Metadata = {
-  title: "Greenfield Ward Citizens' Portal",
-  description: "An easy-to-use, elderly-friendly application for ward residents to report local issues and view community news.",
+  title: "WardConnect — Kowdiar Ward Citizens' Portal",
+  description: "Report local issues, track grievances, and connect with your ward office — simple and accessible for every resident.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Ward Portal",
+    title: "WardConnect",
   },
 };
 
@@ -30,19 +24,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${notoSans.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-beige text-ink-black">
+    <html lang="en" className="h-full antialiased">
+      <body
+        className="min-h-full flex flex-col"
+        style={{ background: '#F7F9F7', color: '#1F2937', fontFamily: "'Inter', system-ui, sans-serif" }}
+      >
         <PWARegister />
         <AuthProvider>
           <ThemeProvider>
             <AuthGuard>
+              {/* Top App Bar */}
               <Header />
-              <main className="flex-1 w-full max-w-4xl mx-auto p-4 sm:p-6 flex flex-col gap-6">
+
+              {/* Page content — padded bottom so BottomNav doesn't cover content */}
+              <main className="flex-1 w-full max-w-2xl mx-auto px-4 pt-4 pb-28 flex flex-col gap-5">
                 {children}
               </main>
+
+              {/* Bottom Navigation */}
+              <BottomNav />
             </AuthGuard>
           </ThemeProvider>
         </AuthProvider>

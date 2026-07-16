@@ -96,14 +96,14 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
           <Camera className="w-6 h-6 text-emerald-850 shrink-0" />
           <span>Issue Photo / ഫോട്ടോ എടുക്കുക</span>
         </label>
-        <p className="text-gray-500 text-base leading-relaxed">
+        <p className="text-gray-550 text-base leading-relaxed">
           Please take a clear picture of the issue (e.g. road pothole, leaking pipe) so our team can locate it.
         </p>
 
         {existingPhoto ? (
           /* Captured Photo State */
           <div className="flex flex-col gap-4 items-center">
-            <div className="relative w-full max-w-md rounded-xl overflow-hidden border-4 border-emerald-600 shadow-md aspect-video bg-gray-100">
+            <div className="relative w-full max-w-md rounded-lg overflow-hidden border-4 border-dark-teal shadow-md aspect-video bg-gray-150">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 src={existingPhoto} 
@@ -172,7 +172,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Native System Camera Button (Best for Mobile PWAs) */}
               <label 
-                className="flex flex-col items-center justify-center border-3 border-dashed border-emerald-500 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 rounded-2xl p-6 cursor-pointer text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
+                className="flex flex-col items-center justify-center border-3 border-dashed border-dark-teal hover:border-dark-teal/90 bg-beige/10 hover:bg-beige/25 text-dark-teal rounded-lg p-6 cursor-pointer text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
                 <div className="p-3 bg-emerald-100 rounded-full text-emerald-800 border border-emerald-250">
@@ -180,7 +180,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
                 </div>
                 <div>
                   <div className="font-bold text-xl">Use Mobile Camera</div>
-                  <div className="text-sm text-emerald-700 mt-1">Open camera and snap photo instantly</div>
+                  <div className="text-sm text-dark-teal mt-1">Open camera and snap photo instantly</div>
                 </div>
                 <input
                   type="file"
@@ -195,7 +195,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
               <button
                 type="button"
                 onClick={startCamera}
-                className="flex flex-col items-center justify-center border-3 border-dashed border-amber-500 hover:border-amber-600 bg-amber-50/30 hover:bg-amber-50 text-amber-800 rounded-2xl p-6 text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
+                className="flex flex-col items-center justify-center border-3 border-dashed border-air-force hover:border-air-force/90 bg-air-force/5 hover:bg-air-force/10 text-dark-teal rounded-lg p-6 text-center gap-3 transition-colors shadow-sm active:scale-[0.98]"
                 style={{ minHeight: '140px' }}
               >
                 <div className="p-3 bg-amber-100 rounded-full text-amber-800 border border-amber-250">
@@ -203,7 +203,7 @@ export default function CameraCapture({ onPhotoCaptured, existingPhoto, onClear 
                 </div>
                 <div>
                   <div className="font-bold text-xl">Use Web Browser Cam</div>
-                  <div className="text-sm text-amber-700 mt-1">Show camera preview right here on screen</div>
+                  <div className="text-sm text-air-force mt-1">Show camera preview right here on screen</div>
                 </div>
               </button>
             </div>

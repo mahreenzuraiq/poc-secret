@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const defaultProfile: UserProfile = {
       name: 'John Doe',
       phone: phone,
-      ward: 'Greenfield Ward 12',
+      ward: 'Kowdiar Ward 12',
       houseNo: 'GH-42'
     };
     setUser(defaultProfile);

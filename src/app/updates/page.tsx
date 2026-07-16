@@ -1,52 +1,42 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { getNews, NewsItem } from '@/utils/storage';
 import NewsCard from '@/components/NewsCard';
-import { ArrowLeft } from 'lucide-react';
+import { Newspaper } from 'lucide-react';
 
 export default function UpdatesPage() {
   const [newsList, setNewsList] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     setNewsList(getNews());
-    
-    // Stop any ongoing speech when page transitions
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.speechSynthesis.cancel();
-      }
-    };
+    return () => { if (typeof window !== 'undefined') window.speechSynthesis.cancel(); };
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 py-2">
-      {/* Page Header */}
-      <div className="flex items-center gap-4">
-        <Link 
-          href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center gap-1.5 active:scale-[0.95]"
-          style={{ minHeight: '56px' }}
-          title="Back to dashboard"
-        >
-          <ArrowLeft className="w-5 h-5" /> Back
-        </Link>
-        <h2 className="text-3xl font-black text-gray-900">
-          Ward Updates & Notices
-        </h2>
+    <div className="flex flex-col gap-4">
+      <div>
+        <h1 className="text-base font-bold" style={{ color: '#1F2937' }}>Updates & Notices</h1>
+        <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>
+          Sales, medical camps, and maintenance schedules in Kowdiar Ward.
+        </p>
       </div>
 
-      <p className="text-gray-550 text-base leading-relaxed font-semibold mt-[-8px]">
-        Stay updated on sales, medical camps, and maintenance schedules in Greenfield Ward. Press "Listen to News" on any card to play it out loud.
-      </p>
-
-      {/* Grid listing */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-        {newsList.map((item) => (
-          <NewsCard key={item.id} news={item} />
-        ))}
-      </div>
+      {newsList.length === 0 ? (
+        <div className="flex flex-col items-center gap-3 py-12 text-center rounded-2xl" style={{ background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: '#F2F4F3' }}>
+            <Newspaper className="w-7 h-7" style={{ color: '#9CA3AF' }} />
+          </div>
+          <div>
+            <p className="text-sm font-semibold" style={{ color: '#1F2937' }}>No updates yet</p>
+            <p className="text-xs mt-1" style={{ color: '#9CA3AF' }}>Ward announcements will appear here.</p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {newsList.map(item => <NewsCard key={item.id} news={item} />)}
+        </div>
+      )}
     </div>
   );
 }

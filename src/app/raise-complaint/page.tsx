@@ -6,461 +6,302 @@ import Link from 'next/link';
 import { saveComplaint, Complaint } from '@/utils/storage';
 import CameraCapture from '@/components/CameraCapture';
 import VoiceRecorder from '@/components/VoiceRecorder';
-import { 
-  Map, 
-  Droplet, 
-  Trash2, 
-  Lightbulb, 
-  Activity, 
-  Settings, 
-  ArrowLeft, 
-  Check, 
-  CheckCircle, 
-  Volume2, 
-  VolumeX, 
-  Home, 
-  FolderOpen, 
-  Send, 
-  AlertTriangle 
+import {
+  Map, Droplet, Trash2, Lightbulb, Activity, Settings,
+  ArrowLeft, ArrowRight, CheckCircle, Send, AlertTriangle,
+  Volume2, VolumeX, Home, FolderOpen
 } from 'lucide-react';
 
 type IssueCategory = Complaint['category'];
 type IssuePriority = Complaint['priority'];
 
-interface CategoryOption {
-  value: IssueCategory;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-  description: string;
-  borderColor: string;
-  bgColor: string;
-  textColor: string;
-}
-
-const CATEGORIES: CategoryOption[] = [
-  {
-    value: 'Road',
-    label: 'Road Issue',
-    icon: Map,
-    description: 'Potholes, broken tar, street blockage',
-    borderColor: 'border-amber-400 hover:border-amber-550',
-    bgColor: 'bg-amber-50/50 hover:bg-amber-50',
-    textColor: 'text-amber-950'
-  },
-  {
-    value: 'Water',
-    label: 'Water Leak',
-    icon: Droplet,
-    description: 'Pipe leaks, drainage water, dirty supply',
-    borderColor: 'border-blue-400 hover:border-blue-550',
-    bgColor: 'bg-blue-50/50 hover:bg-blue-50',
-    textColor: 'text-blue-950'
-  },
-  {
-    value: 'Garbage',
-    label: 'Garbage Pile',
-    icon: Trash2,
-    description: 'Overflowing bins, uncollected street trash',
-    borderColor: 'border-red-400 hover:border-red-550',
-    bgColor: 'bg-red-50/50 hover:bg-red-50',
-    textColor: 'text-red-950'
-  },
-  {
-    value: 'Electricity',
-    label: 'Electricity / Light',
-    icon: Lightbulb,
-    description: 'Damaged street light, dangling/sparking wire',
-    borderColor: 'border-yellow-400 hover:border-yellow-550',
-    bgColor: 'bg-yellow-50/30 hover:bg-yellow-50',
-    textColor: 'text-yellow-950'
-  },
-  {
-    value: 'Health',
-    label: 'Health & Drainage',
-    icon: Activity,
-    description: 'Open sewer line, stagnant water logging',
-    borderColor: 'border-emerald-400 hover:border-emerald-550',
-    bgColor: 'bg-emerald-50/50 hover:bg-emerald-50',
-    textColor: 'text-emerald-950'
-  },
-  {
-    value: 'Others',
-    label: 'General / Other',
-    icon: Settings,
-    description: 'Other municipal or ward concerns',
-    borderColor: 'border-gray-400 hover:border-gray-500',
-    bgColor: 'bg-gray-50/80 hover:bg-gray-100',
-    textColor: 'text-gray-950'
-  }
+const CATEGORIES: { value: IssueCategory; label: string; icon: React.ComponentType<{className?:string}>;  description: string; iconBg: string; iconColor: string }[] = [
+  { value: 'Road',        label: 'Road',        icon: Map,       description: 'Potholes, broken surface',       iconBg: '#FFF8E1', iconColor: '#F57F17' },
+  { value: 'Water',       label: 'Water',       icon: Droplet,   description: 'Pipe leaks, dirty supply',       iconBg: '#E3F2FD', iconColor: '#1976D2' },
+  { value: 'Garbage',     label: 'Garbage',     icon: Trash2,    description: 'Overflowing bins, trash piles',  iconBg: '#E8F5E9', iconColor: '#2E7D32' },
+  { value: 'Electricity', label: 'Electricity', icon: Lightbulb, description: 'Streetlight, dangling wire',     iconBg: '#FFFDE7', iconColor: '#F9A825' },
+  { value: 'Health',      label: 'Health',      icon: Activity,  description: 'Open sewer, stagnant water',     iconBg: '#FCE4EC', iconColor: '#C2185B' },
+  { value: 'Others',      label: 'Others',      icon: Settings,  description: 'Other municipal concerns',       iconBg: '#F3E5F5', iconColor: '#7B1FA2' },
 ];
 
+const STEPS = ['Category', 'Details', 'Evidence', 'Submit'];
+
 export default function RaiseComplaintPage() {
-  // Form states
-  const [title, setTitle] = useState('');
+  const router = useRouter();
+  const [step, setStep] = useState(0);
   const [category, setCategory] = useState<IssueCategory | null>(null);
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
   const [priority, setPriority] = useState<IssuePriority>('Medium');
-  
   const [photo, setPhoto] = useState<string | null>(null);
   const [audio, setAudio] = useState<string | null>(null);
   const [audioDuration, setAudioDuration] = useState(0);
-
-  // Submit states
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedComplaint, setSubmittedComplaint] = useState<Complaint | null>(null);
-  const [isSuccessSpeaking, setIsSuccessSpeaking] = useState(false);
+  const [submitted, setSubmitted] = useState<Complaint | null>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // Stop speech if card unmounts
-  useEffect(() => {
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
+  useEffect(() => () => { if (typeof window !== 'undefined') window.speechSynthesis.cancel(); }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!category || !title || !description || !location) return;
-
     setIsSubmitting(true);
-
-    // Simulate short network delay
     setTimeout(() => {
-      const saved = saveComplaint({
-        title,
-        category,
-        description,
-        location,
-        priority,
-        photo,
-        audio,
-        audioDuration
-      });
-      
-      setSubmittedComplaint(saved);
+      const saved = saveComplaint({ title, category, description, location, priority, photo, audio, audioDuration });
+      setSubmitted(saved);
       setIsSubmitting(false);
-      speakSuccessNotification(saved.id, saved.title);
-    }, 1200);
+    }, 1000);
   };
 
-  const speakSuccessNotification = (complaintId: string, issueTitle: string) => {
-    if (typeof window === 'undefined') return;
-    window.speechSynthesis.cancel();
-
-    const text = `Success! Your complaint titled "${issueTitle}" has been submitted. Reference number is ${complaintId.split('-').join(' ')}. We will inspect it soon. Thank you!`;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.85;
-
-    utterance.onend = () => setIsSuccessSpeaking(false);
-    utterance.onerror = () => setIsSuccessSpeaking(false);
-
-    setIsSuccessSpeaking(true);
+  const speakSuccess = () => {
+    if (!submitted || typeof window === 'undefined') return;
+    if (isSpeaking) { window.speechSynthesis.cancel(); setIsSpeaking(false); return; }
+    const utterance = new SpeechSynthesisUtterance(
+      `Your complaint has been registered with ID ${submitted.id.split('-')[0]}. We will notify you once it is assigned.`
+    );
+    utterance.lang = 'en-US'; utterance.rate = 0.85;
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
   };
 
-  const toggleSuccessSpeech = () => {
-    if (!submittedComplaint) return;
-    if (isSuccessSpeaking) {
-      window.speechSynthesis.cancel();
-      setIsSuccessSpeaking(false);
-    } else {
-      speakSuccessNotification(submittedComplaint.id, submittedComplaint.title);
-    }
-  };
-
-  if (submittedComplaint) {
-    /* Success Screen */
+  // ── Success Screen ──
+  if (submitted) {
     return (
-      <div className="flex flex-col gap-6 py-6 items-center text-center max-w-xl mx-auto">
-        <div className="w-24 h-24 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center border-4 border-emerald-500 shadow-md animate-bounce">
-          <CheckCircle className="w-12 h-12" />
+      <div className="flex flex-col items-center gap-6 py-6 text-center animate-fade-in">
+        <div className="w-20 h-20 rounded-full flex items-center justify-center animate-check-pop" style={{ background: '#E8F5E9' }}>
+          <CheckCircle className="w-10 h-10" style={{ color: '#2E7D32' }} />
         </div>
-
-        <div className="flex flex-col gap-3">
-          <h2 className="text-3xl font-black text-gray-900">Complaint Raised Successfully!</h2>
-          <p className="text-xl text-emerald-800 font-bold bg-emerald-50 px-4 py-2.5 rounded-2xl border border-emerald-200">
-            Complaint Ticket: {submittedComplaint.id}
+        <div>
+          <h2 className="text-xl font-bold" style={{ color: '#1F2937' }}>Complaint Registered!</h2>
+          <p className="text-sm mt-1.5" style={{ color: '#6B7280' }}>
+            Your issue has been submitted to the ward office.
           </p>
+          <div className="mt-3 px-4 py-2 rounded-xl text-sm font-semibold inline-block" style={{ background: '#E8F5E9', color: '#2E7D32' }}>
+            ID: {submitted.id}
+          </div>
         </div>
-
-        <p className="text-gray-700 text-lg leading-relaxed font-semibold">
-          Your complaint <strong>"{submittedComplaint.title}"</strong> has been saved. Our Greenfield Ward team has received the alert and will schedule inspections.
-        </p>
-
-        {/* Audio confirmation */}
-        <button
-          type="button"
-          onClick={toggleSuccessSpeech}
-          className={`py-3.5 px-6 rounded-2xl font-bold transition-all shadow flex items-center justify-center gap-2 text-base active:scale-[0.98] ${
-            isSuccessSpeaking 
-              ? 'bg-amber-500 hover:bg-amber-600 text-emerald-950' 
-              : 'bg-emerald-800 hover:bg-emerald-900 text-white'
-          }`}
-          style={{ minHeight: '56px' }}
-        >
-          {isSuccessSpeaking ? (
-            <>
-              <VolumeX className="w-5 h-5" /> Stop Confirmation Voice
-            </>
-          ) : (
-            <>
-              <Volume2 className="w-5 h-5" /> Listen to Confirmation
-            </>
-          )}
+        <button onClick={speakSuccess} className="flex items-center gap-2 text-sm font-medium px-4 py-2.5 rounded-xl transition-all" style={{ background: isSpeaking ? '#FFF8E1' : '#F2F4F3', color: '#1F2937' }}>
+          {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          {isSpeaking ? 'Stop' : 'Read aloud'}
         </button>
-
-        <div className="flex flex-col sm:flex-row gap-4 w-full mt-4">
-          <Link
-            href="/"
-            className="flex-1 py-4 px-6 bg-dark-teal hover:bg-dark-teal/95 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center gap-2 min-h-[64px] active:scale-[0.98]"
-          >
-            <Home className="w-5 h-5" /> Return to Dashboard
+        <div className="flex flex-col gap-2 w-full">
+          <Link href="/complaints" className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl text-sm font-semibold transition-all" style={{ background: '#2E7D32', color: '#fff' }}>
+            <FolderOpen className="w-4 h-4" /> View My Complaints
           </Link>
-          <Link
-            href="/complaints"
-            className="flex-1 py-4 px-6 bg-emerald-700 hover:bg-emerald-850 text-white font-bold rounded-2xl text-center shadow-md transition-all text-lg flex items-center justify-center gap-2 min-h-[64px] active:scale-[0.98]"
-          >
-            <FolderOpen className="w-5 h-5" /> View My Grievances
+          <Link href="/" className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl text-sm font-semibold border" style={{ color: '#6B7280', borderColor: '#E5E7EB' }}>
+            <Home className="w-4 h-4" /> Back to Home
           </Link>
         </div>
       </div>
     );
   }
 
-  const isFormValid = title.trim() !== '' && category !== null && description.trim() !== '' && location.trim() !== '';
+  // ── Step indicator ──
+  const StepBar = () => (
+    <div className="flex items-center gap-1.5 mb-5">
+      {STEPS.map((s, i) => (
+        <React.Fragment key={s}>
+          <div className="flex flex-col items-center gap-1">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all"
+              style={{
+                background: i < step ? '#2E7D32' : i === step ? '#E8F5E9' : '#F2F4F3',
+                color: i < step ? '#fff' : i === step ? '#2E7D32' : '#9CA3AF',
+                border: i === step ? '2px solid #2E7D32' : '2px solid transparent',
+              }}>
+              {i < step ? '✓' : i + 1}
+            </div>
+            <span className="text-[10px] font-semibold" style={{ color: i === step ? '#2E7D32' : '#9CA3AF' }}>{s}</span>
+          </div>
+          {i < STEPS.length - 1 && (
+            <div className="flex-1 h-0.5 mb-4 rounded" style={{ background: i < step ? '#2E7D32' : '#E5E7EB' }} />
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+
+  const inputStyle = {
+    width: '100%', padding: '10px 14px', background: '#F2F4F3',
+    border: '2px solid #E5E7EB', borderRadius: '12px',
+    fontSize: '14px', color: '#1F2937', outline: 'none', fontFamily: 'inherit',
+  };
 
   return (
-    <div className="flex flex-col gap-6 py-2">
-      {/* Top Header */}
-      <div className="flex items-center gap-4">
-        <Link 
-          href="/" 
-          className="p-3.5 bg-gray-150 hover:bg-gray-200 text-gray-700 font-extrabold rounded-2xl border-2 border-gray-250 transition-colors flex items-center justify-center gap-1.5 active:scale-[0.95]"
-          style={{ minHeight: '56px' }}
-          title="Back to dashboard"
-        >
-          <ArrowLeft className="w-5 h-5" /> Back
+    <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <Link href="/" className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors" style={{ color: '#6B7280' }}>
+          <ArrowLeft className="w-4 h-4" />
         </Link>
-        <h2 className="text-3xl font-black text-gray-900">
-          Raise a Grievance
-        </h2>
+        <h1 className="text-base font-bold" style={{ color: '#1F2937' }}>Report an Issue</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
-        
-        {/* Step 1: Select Category */}
-        <div className="flex flex-col gap-4">
-          <label className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">1</span>
-            Select Issue Category / തരം
-          </label>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {CATEGORIES.map((cat) => {
-              const isSelected = category === cat.value;
+      <StepBar />
+
+      {/* ── Step 0: Category ── */}
+      {step === 0 && (
+        <div className="flex flex-col gap-3">
+          <p className="text-sm" style={{ color: '#6B7280' }}>What type of issue are you reporting?</p>
+          <div className="grid grid-cols-2 gap-2.5">
+            {CATEGORIES.map(cat => {
+              const Icon = cat.icon;
+              const selected = category === cat.value;
               return (
-                <button
-                  key={cat.value}
-                  type="button"
-                  onClick={() => setCategory(cat.value)}
-                  className={`border-3 rounded-2xl p-5 flex flex-col items-center justify-center text-center gap-2.5 transition-all active:scale-[0.98] ${cat.bgColor} ${
-                    isSelected 
-                      ? 'border-emerald-600 ring-4 ring-emerald-150 scale-[1.02]' 
-                      : cat.borderColor
-                  }`}
-                  style={{ minHeight: '140px' }}
-                >
-                  <div className="p-3.5 bg-white/80 rounded-2xl border border-gray-100 shadow-sm text-gray-700">
-                    <cat.icon className="w-8 h-8" />
+                <button key={cat.value} type="button" onClick={() => setCategory(cat.value)}
+                  className="flex flex-col gap-2.5 p-4 rounded-2xl text-left transition-all active:scale-[0.97]"
+                  style={{
+                    background: selected ? cat.iconBg : '#fff',
+                    border: `2px solid ${selected ? cat.iconColor : '#E5E7EB'}`,
+                    boxShadow: selected ? `0 0 0 3px ${cat.iconColor}20` : '0 1px 3px rgba(0,0,0,0.06)',
+                  }}>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: cat.iconBg }}>
+                    <Icon className="w-4.5 h-4.5" style={{ color: cat.iconColor }} />
                   </div>
-                  <div className="flex flex-col">
-                    <span className={`text-xl font-extrabold ${isSelected ? 'text-emerald-950 font-black' : cat.textColor}`}>
-                      {cat.label}
-                    </span>
-                    <span className="text-xs text-gray-500 font-semibold mt-1">
-                      {cat.description}
-                    </span>
+                  <div>
+                    <p className="text-sm font-semibold" style={{ color: '#1F2937' }}>{cat.label}</p>
+                    <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{cat.description}</p>
                   </div>
-                  {isSelected && (
-                    <span className="mt-1 bg-emerald-600 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1.5">
-                      <Check className="w-3.5 h-3.5" /> Selected
-                    </span>
-                  )}
                 </button>
               );
             })}
           </div>
+          <button onClick={() => category && setStep(1)} disabled={!category}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold mt-1 transition-all"
+            style={{ background: category ? '#2E7D32' : '#E5E7EB', color: category ? '#fff' : '#9CA3AF', boxShadow: category ? '0 2px 8px rgba(46,125,50,0.25)' : 'none' }}>
+            Continue <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
+      )}
 
-        {/* Step 2: Grievance Details Form */}
-        <div className="flex flex-col gap-5 bg-white rounded-2xl p-6 border-2 border-gray-200 shadow-sm">
-          <div className="text-2xl font-black text-gray-800 flex items-center gap-2 border-b border-gray-150 pb-3 mb-1">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">2</span>
-            Fill Issue Details
-          </div>
+      {/* ── Step 1: Details ── */}
+      {step === 1 && (
+        <form onSubmit={e => { e.preventDefault(); if (title && description && location) setStep(2); }} className="flex flex-col gap-4">
+          {[
+            { id: 'title', label: 'Issue Title *', value: title, set: setTitle, placeholder: 'e.g. Large pothole near bus stop', type: 'text' },
+            { id: 'location', label: 'Location / Landmark *', value: location, set: setLocation, placeholder: 'e.g. Near St. Xavier\'s School gate', type: 'text' },
+          ].map(f => (
+            <div key={f.id} className="flex flex-col gap-1.5">
+              <label htmlFor={f.id} className="text-sm font-semibold" style={{ color: '#1F2937' }}>{f.label}</label>
+              <input id={f.id} type={f.type} required value={f.value} onChange={e => f.set(e.target.value)} placeholder={f.placeholder}
+                style={inputStyle}
+                onFocus={e => { e.target.style.borderColor = '#2E7D32'; e.target.style.boxShadow = '0 0 0 3px rgba(46,125,50,0.10)'; }}
+                onBlur={e => { e.target.style.borderColor = '#E5E7EB'; e.target.style.boxShadow = 'none'; }} />
+            </div>
+          ))}
 
-          {/* Title input */}
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="title" className="text-lg font-extrabold text-gray-800">
-              Grievance Title / വിഷയം <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="title"
-              type="text"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Big pothole near Central Library"
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
-              style={{ minHeight: '56px' }}
-            />
+            <label htmlFor="desc" className="text-sm font-semibold" style={{ color: '#1F2937' }}>Description *</label>
+            <textarea id="desc" required value={description} onChange={e => setDescription(e.target.value)}
+              rows={3} placeholder="Describe the issue in detail..."
+              style={{ ...inputStyle, resize: 'none' }}
+              onFocus={e => { e.target.style.borderColor = '#2E7D32'; e.target.style.boxShadow = '0 0 0 3px rgba(46,125,50,0.10)'; }}
+              onBlur={e => { e.target.style.borderColor = '#E5E7EB'; e.target.style.boxShadow = 'none'; }} />
           </div>
 
-          {/* Description input */}
-          <div className="flex flex-col gap-1.5 mt-2">
-            <label htmlFor="description" className="text-lg font-extrabold text-gray-800">
-              Detailed Description / വിവരണം <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              id="description"
-              required
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Provide details about the issue. (How long has this been occurring? Is it blocking traffic?)"
-              rows={4}
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
-            />
-          </div>
-
-          {/* Location input */}
-          <div className="flex flex-col gap-1.5 mt-2">
-            <label htmlFor="location" className="text-lg font-extrabold text-gray-800">
-              Location details / സ്ഥലം <span className="text-red-500">*</span>
-            </label>
-            <input
-              id="location"
-              type="text"
-              required
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. Opposite GH High School, Street 4"
-              className="w-full border-2 border-gray-300 rounded-xl p-4 text-base focus:border-dark-teal focus:ring-4 focus:ring-dark-teal/15 outline-none transition-all placeholder:text-gray-400 font-medium text-ink-black"
-              style={{ minHeight: '56px' }}
-            />
-          </div>
-
-          {/* Priority selector */}
-          <div className="flex flex-col gap-2.5 mt-2">
-            <span className="text-lg font-extrabold text-gray-800">
-              Urgency / Priority Level
-            </span>
-            <div className="grid grid-cols-3 gap-3 w-full">
-              {(['Low', 'Medium', 'High'] as IssuePriority[]).map((p) => {
-                const isSel = priority === p;
-                let activeBtnStyle = 'bg-gray-150 border-gray-300 text-gray-800';
-                if (isSel) {
-                  if (p === 'Low') activeBtnStyle = 'bg-emerald-600 border-emerald-600 text-white font-extrabold';
-                  if (p === 'Medium') activeBtnStyle = 'bg-amber-500 border-amber-600 text-emerald-950 font-extrabold';
-                  if (p === 'High') activeBtnStyle = 'bg-red-600 border-red-600 text-white font-extrabold animate-pulse';
-                }
-
-                return (
-                  <button
-                    key={p}
-                    type="button"
-                    onClick={() => setPriority(p)}
-                    className={`py-3.5 px-4 rounded-xl border text-center transition-all shadow-sm font-bold text-base active:scale-[0.98] flex items-center justify-center gap-2 ${
-                      isSel ? activeBtnStyle : 'bg-gray-50 border-gray-250 text-gray-600 hover:bg-gray-100'
-                    }`}
-                    style={{ minHeight: '52px' }}
-                  >
-                    {p === 'Low' && <span className="w-3 h-3 rounded-full bg-emerald-500 block shrink-0" />}
-                    {p === 'Medium' && <span className="w-3 h-3 rounded-full bg-amber-500 block shrink-0" />}
-                    {p === 'High' && <span className="w-3 h-3 rounded-full bg-red-600 block shrink-0" />}
-                    <span>{p}</span>
-                  </button>
-                );
-              })}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-sm font-semibold" style={{ color: '#1F2937' }}>Priority</label>
+            <div className="flex gap-2">
+              {(['Low', 'Medium', 'High'] as IssuePriority[]).map(p => (
+                <button key={p} type="button" onClick={() => setPriority(p)}
+                  className="flex-1 py-2 rounded-xl text-xs font-semibold transition-all"
+                  style={{
+                    background: priority === p ? (p === 'High' ? '#FFEBEE' : p === 'Medium' ? '#FFF8E1' : '#E8F5E9') : '#F2F4F3',
+                    color: priority === p ? (p === 'High' ? '#D32F2F' : p === 'Medium' ? '#F57F17' : '#2E7D32') : '#9CA3AF',
+                    border: `2px solid ${priority === p ? (p === 'High' ? '#D32F2F' : p === 'Medium' ? '#F57F17' : '#2E7D32') : 'transparent'}`,
+                  }}>{p}</button>
+              ))}
             </div>
           </div>
 
-        </div>
-
-        {/* Step 3: Media Upload */}
-        <div className="flex flex-col gap-4">
-          <div className="text-2xl font-black text-gray-800 flex items-center gap-2">
-            <span className="bg-emerald-100 text-emerald-850 w-9 h-9 rounded-full flex items-center justify-center text-lg font-extrabold">3</span>
-            Attach Evidence (Photo / Voice Note)
+          <div className="flex gap-2 mt-1">
+            <button type="button" onClick={() => setStep(0)} className="flex-1 py-3 rounded-2xl text-sm font-semibold" style={{ background: '#F2F4F3', color: '#6B7280' }}>
+              Back
+            </button>
+            <button type="submit" disabled={!title || !description || !location}
+              className="flex-[2] flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold transition-all"
+              style={{ background: title && description && location ? '#2E7D32' : '#E5E7EB', color: title && description && location ? '#fff' : '#9CA3AF' }}>
+              Continue <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
-          <p className="text-gray-500 text-base font-semibold mt-[-6px]">
-            You can capture a photo or speak a description. Both are highly recommended for faster resolution.
-          </p>
+        </form>
+      )}
 
-          <CameraCapture 
-            onPhotoCaptured={setPhoto} 
-            existingPhoto={photo} 
-            onClear={() => setPhoto(null)} 
-          />
+      {/* ── Step 2: Evidence ── */}
+      {step === 2 && (
+        <div className="flex flex-col gap-4">
+          <p className="text-sm" style={{ color: '#6B7280' }}>Attach a photo or voice note to strengthen your complaint (optional).</p>
 
-          <VoiceRecorder
-            onAudioRecorded={(base64, duration) => {
-              setAudio(base64);
-              setAudioDuration(duration);
-            }}
-            existingAudio={audio}
-            existingDuration={audioDuration}
-            onClear={() => {
-              setAudio(null);
-              setAudioDuration(0);
-            }}
-          />
+          <div className="rounded-2xl overflow-hidden" style={{ border: '2px solid #E5E7EB' }}>
+            <div className="px-4 py-3" style={{ background: '#F2F4F3', borderBottom: '1px solid #E5E7EB' }}>
+              <p className="text-xs font-semibold" style={{ color: '#1F2937' }}>📷 Photo Evidence</p>
+            </div>
+            <div className="p-4">
+              <CameraCapture onPhotoCapture={setPhoto} capturedPhoto={photo} />
+            </div>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden" style={{ border: '2px solid #E5E7EB' }}>
+            <div className="px-4 py-3" style={{ background: '#F2F4F3', borderBottom: '1px solid #E5E7EB' }}>
+              <p className="text-xs font-semibold" style={{ color: '#1F2937' }}>🎙 Voice Note</p>
+            </div>
+            <div className="p-4">
+              <VoiceRecorder onRecordingComplete={(data, duration) => { setAudio(data); setAudioDuration(duration); }} />
+            </div>
+          </div>
+
+          <div className="flex gap-2 mt-1">
+            <button type="button" onClick={() => setStep(1)} className="flex-1 py-3 rounded-2xl text-sm font-semibold" style={{ background: '#F2F4F3', color: '#6B7280' }}>Back</button>
+            <button type="button" onClick={() => setStep(3)} className="flex-[2] flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold" style={{ background: '#2E7D32', color: '#fff' }}>
+              Review <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
+      )}
 
-        {/* Submit Actions */}
-        <div className="flex flex-col gap-4 mt-2">
-          <button
-            type="submit"
-            disabled={!isFormValid || isSubmitting}
-            className={`w-full py-5 px-6 font-black rounded-2xl text-center shadow transition-all text-xl flex items-center justify-center gap-2.5 ${
-              !isFormValid
-                ? 'bg-gray-200 text-gray-400 border border-gray-300 cursor-not-allowed'
-                : isSubmitting
-                  ? 'bg-dark-teal/80 text-white cursor-wait opacity-80'
-                  : 'bg-dark-teal hover:bg-dark-teal/95 text-white shadow-md active:scale-[0.98]'
-            }`}
-            style={{ minHeight: '68px' }}
-          >
-            {isSubmitting ? (
-              <>
-                <span className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></span>
-                <span>Submitting Grievance...</span>
-              </>
-            ) : (
-              <>
-                <Send className="w-5 h-5 text-emerald-100" /> Submit Complaint / സമർപ്പിക്കുക
-              </>
-            )}
-          </button>
-          
-          {!isFormValid && (
-            <p className="text-red-700 font-bold text-base bg-red-50 py-2.5 px-4 rounded-xl border border-red-100 flex items-center justify-center gap-2">
-              <AlertTriangle className="w-5 h-5 text-red-700 shrink-0" />
-              <span>Please fill out all required fields marked with * (Category, Title, Description, Location) to submit.</span>
-            </p>
+      {/* ── Step 3: Review & Submit ── */}
+      {step === 3 && (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="rounded-2xl p-4 flex flex-col gap-3" style={{ background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+            <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#9CA3AF' }}>Review Your Complaint</p>
+            {[
+              { label: 'Category', value: category },
+              { label: 'Title', value: title },
+              { label: 'Location', value: location },
+              { label: 'Priority', value: priority },
+              { label: 'Description', value: description },
+            ].map(row => (
+              <div key={row.label} className="flex flex-col gap-0.5 pb-2.5" style={{ borderBottom: '1px solid #F2F4F3' }}>
+                <span className="text-xs font-semibold" style={{ color: '#9CA3AF' }}>{row.label}</span>
+                <span className="text-sm font-medium" style={{ color: '#1F2937' }}>{row.value}</span>
+              </div>
+            ))}
+            <div className="flex gap-3 text-xs font-medium" style={{ color: '#6B7280' }}>
+              <span>{photo ? '✓ Photo attached' : '✗ No photo'}</span>
+              <span>{audio ? '✓ Voice note attached' : '✗ No voice note'}</span>
+            </div>
+          </div>
+
+          {(!category || !title || !description || !location) && (
+            <div className="flex items-center gap-2 p-3 rounded-xl text-xs font-semibold" style={{ background: '#FFEBEE', color: '#D32F2F' }}>
+              <AlertTriangle className="w-4 h-4 shrink-0" /> Please complete all required fields.
+            </div>
           )}
 
-          <Link
-            href="/"
-            className="w-full py-4 px-6 bg-gray-150 hover:bg-gray-200 text-gray-750 font-extrabold rounded-2xl text-center border-2 border-gray-250 transition-colors text-base flex items-center justify-center min-h-[64px] active:scale-[0.98]"
-          >
-            Cancel & Go Back
-          </Link>
-        </div>
-
-      </form>
+          <div className="flex gap-2">
+            <button type="button" onClick={() => setStep(2)} className="flex-1 py-3 rounded-2xl text-sm font-semibold" style={{ background: '#F2F4F3', color: '#6B7280' }}>Back</button>
+            <button type="submit" disabled={!category || !title || !description || !location || isSubmitting}
+              className="flex-[2] flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-semibold transition-all"
+              style={{ background: '#2E7D32', color: '#fff', boxShadow: '0 2px 8px rgba(46,125,50,0.25)' }}>
+              {isSubmitting
+                ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                : <><Send className="w-4 h-4" /> Submit Complaint</>}
+            </button>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

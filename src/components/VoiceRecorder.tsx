@@ -171,7 +171,7 @@ export default function VoiceRecorder({
           </div>
         ) : isRecording ? (
           /* Recording Active State */
-          <div className="flex flex-col items-center justify-center p-6 bg-red-50/30 border-2 border-dashed border-red-300 rounded-2xl gap-4">
+          <div className="flex flex-col items-center justify-center p-6 bg-red-50/30 border-2 border-dashed border-red-300 rounded-lg gap-4">
             <div className="text-red-700 font-bold text-2xl animate-pulse flex items-center gap-2">
               <span className="w-4 h-4 rounded-full bg-red-600 block"></span>
               RECORDING...
@@ -198,8 +198,8 @@ export default function VoiceRecorder({
           </div>
         ) : (
           /* Start Recording Initial State */
-          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-emerald-300 bg-emerald-50/10 rounded-2xl gap-4">
-            <div className="text-emerald-800 font-bold text-lg">Tap below to record description:</div>
+          <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-ash-grey bg-beige/20 rounded-lg gap-4">
+            <div className="text-dark-teal font-bold text-lg">Tap below to record description:</div>
             
             {/* Giant Record Button */}
             <button
