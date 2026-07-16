@@ -200,7 +200,9 @@ export default function HomePage() {
                 className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ background: iconBg }}
               >
-                <Icon className="w-5 h-5" style={{ color: iconColor }} strokeWidth={2} />
+                <span style={{ color: iconColor }}>
+                  <Icon className="w-5 h-5" strokeWidth={2} />
+                </span>
               </div>
               <div>
                 <p className="text-sm font-bold" style={{ color: '#1F2937' }}>{label}</p>

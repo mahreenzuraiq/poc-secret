@@ -158,7 +158,9 @@ export default function RaiseComplaintPage() {
                     boxShadow: selected ? `0 0 0 3px ${cat.iconColor}20` : '0 1px 3px rgba(0,0,0,0.06)',
                   }}>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: cat.iconBg }}>
-                    <Icon className="w-4.5 h-4.5" style={{ color: cat.iconColor }} />
+                    <span style={{ color: cat.iconColor }}>
+                      <Icon className="w-4 h-4" />
+                    </span>
                   </div>
                   <div>
                     <p className="text-sm font-semibold" style={{ color: '#1F2937' }}>{cat.label}</p>
