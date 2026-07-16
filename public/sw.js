@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ward-portal-v2';
+const CACHE_NAME = 'ward-portal-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.json',

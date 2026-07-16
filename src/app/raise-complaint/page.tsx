@@ -241,7 +241,7 @@ export default function RaiseComplaintPage() {
               <p className="text-xs font-semibold" style={{ color: '#1F2937' }}>📷 Photo Evidence</p>
             </div>
             <div className="p-4">
-              <CameraCapture onPhotoCapture={setPhoto} capturedPhoto={photo} />
+              <CameraCapture onPhotoCaptured={setPhoto} existingPhoto={photo} onClear={() => setPhoto(null)} />
             </div>
           </div>
 
@@ -250,7 +250,12 @@ export default function RaiseComplaintPage() {
               <p className="text-xs font-semibold" style={{ color: '#1F2937' }}>🎙 Voice Note</p>
             </div>
             <div className="p-4">
-              <VoiceRecorder onRecordingComplete={(data, duration) => { setAudio(data); setAudioDuration(duration); }} />
+              <VoiceRecorder 
+                onAudioRecorded={(data, duration) => { setAudio(data); setAudioDuration(duration); }} 
+                existingAudio={audio} 
+                existingDuration={audioDuration} 
+                onClear={() => { setAudio(null); setAudioDuration(0); }} 
+              />
             </div>
           </div>
 
