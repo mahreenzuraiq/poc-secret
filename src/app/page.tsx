@@ -8,7 +8,7 @@ import {
   MapPin, Home, Volume2, VolumeX,
   Map, Droplet, Trash2, Lightbulb, Activity, Settings,
   PlusCircle, Megaphone, FolderOpen, User, ArrowRight, Inbox,
-  CheckCircle, Clock, AlertCircle
+  CheckCircle, Clock, AlertCircle, Tag
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -112,6 +112,14 @@ export default function HomePage() {
       iconBg: '#E0F2F1',
       iconColor: '#00897B',
     },
+    {
+      href: '/offers',
+      label: 'Offers Zone',
+      description: 'Discounts & welfare schemes for residents',
+      icon: Tag,
+      iconBg: '#FCE4EC',
+      iconColor: '#C2185B',
+    },
   ];
 
   return (
@@ -183,33 +191,36 @@ export default function HomePage() {
           Quick Actions
         </h3>
         <div className="grid grid-cols-2 gap-3">
-          {QUICK_ACTIONS.map(({ href, label, description, icon: Icon, iconBg, iconColor }) => (
-            <Link
-              key={href}
-              href={href}
-              className="group flex flex-col gap-3 rounded-2xl p-4 transition-all active:scale-[0.97]"
-              style={{
-                background: '#fff',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                minHeight: '120px',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.10)')}
-              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)')}
-            >
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: iconBg }}
+          {QUICK_ACTIONS.map(({ href, label, description, icon: Icon, iconBg, iconColor }, index) => {
+            const isFullWidth = index === 4;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`group flex ${isFullWidth ? 'col-span-2 flex-row items-center gap-4' : 'flex-col gap-3'} rounded-2xl p-4 transition-all active:scale-[0.97]`}
+                style={{
+                  background: '#fff',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                  minHeight: isFullWidth ? '80px' : '120px',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.10)')}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)')}
               >
-                <span style={{ color: iconColor }}>
-                  <Icon className="w-5 h-5" strokeWidth={2} />
-                </span>
-              </div>
-              <div>
-                <p className="text-sm font-bold" style={{ color: '#1F2937' }}>{label}</p>
-                <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{description}</p>
-              </div>
-            </Link>
-          ))}
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: iconBg }}
+                >
+                  <span style={{ color: iconColor }}>
+                    <Icon className="w-5 h-5" strokeWidth={2} />
+                  </span>
+                </div>
+                <div>
+                  <p className="text-sm font-bold" style={{ color: '#1F2937' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: '#9CA3AF' }}>{description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

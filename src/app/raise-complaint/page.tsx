@@ -181,18 +181,33 @@ export default function RaiseComplaintPage() {
       {/* ── Step 1: Details ── */}
       {step === 1 && (
         <form onSubmit={e => { e.preventDefault(); if (title && description && location) setStep(2); }} className="flex flex-col gap-4">
-          {[
-            { id: 'title', label: 'Issue Title *', value: title, set: setTitle, placeholder: 'e.g. Large pothole near bus stop', type: 'text' },
-            { id: 'location', label: 'Location / Landmark *', value: location, set: setLocation, placeholder: 'e.g. Near St. Xavier\'s School gate', type: 'text' },
-          ].map(f => (
-            <div key={f.id} className="flex flex-col gap-1.5">
-              <label htmlFor={f.id} className="text-sm font-semibold" style={{ color: '#1F2937' }}>{f.label}</label>
-              <input id={f.id} type={f.type} required value={f.value} onChange={e => f.set(e.target.value)} placeholder={f.placeholder}
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="title" className="text-sm font-semibold" style={{ color: '#1F2937' }}>Issue Title *</label>
+            <input id="title" type="text" required value={title} onChange={e => setTitle(e.target.value)} placeholder="e.g. Large pothole near bus stop"
+              style={inputStyle}
+              onFocus={e => { e.target.style.borderColor = '#2E7D32'; e.target.style.boxShadow = '0 0 0 3px rgba(46,125,50,0.10)'; }}
+              onBlur={e => { e.target.style.borderColor = '#E5E7EB'; e.target.style.boxShadow = 'none'; }} />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="location" className="text-sm font-semibold" style={{ color: '#1F2937' }}>Location / Landmark *</label>
+            <div className="flex gap-2">
+              <input id="location" type="text" required value={location} onChange={e => setLocation(e.target.value)} placeholder="e.g. Near St. Xavier's School gate"
+                className="flex-1"
                 style={inputStyle}
                 onFocus={e => { e.target.style.borderColor = '#2E7D32'; e.target.style.boxShadow = '0 0 0 3px rgba(46,125,50,0.10)'; }}
                 onBlur={e => { e.target.style.borderColor = '#E5E7EB'; e.target.style.boxShadow = 'none'; }} />
+              
+              <button 
+                type="button" 
+                onClick={() => setLocation(`Kowdiar Junction (8.5241° N, 76.9632° E) · Auto-Geotagged`)}
+                className="px-3 rounded-xl text-xs font-bold border border-emerald-200 text-emerald-800 hover:bg-emerald-50 transition-all shrink-0 flex items-center gap-1 active:scale-[0.97]"
+                style={{ background: '#E8F5E9', minHeight: '44px' }}
+              >
+                📍 Auto-GPS
+              </button>
             </div>
-          ))}
+          </div>
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="desc" className="text-sm font-semibold" style={{ color: '#1F2937' }}>Description *</label>

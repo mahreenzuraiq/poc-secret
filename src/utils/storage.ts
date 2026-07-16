@@ -25,11 +25,43 @@ export interface NewsItem {
 
 const STORAGE_KEY = 'ward-portal-complaints';
 
+const SEED_COMPLAINTS: Complaint[] = [
+  {
+    id: 'CMP-849204',
+    title: 'Drinking Water Pipeline Leak',
+    category: 'Water',
+    description: 'Main distribution line cracked. Clean water is wasting onto the road since early morning.',
+    location: 'Palace Road, Near TTC Junction (8.5255° N, 76.9640° E)',
+    priority: 'High',
+    photo: null,
+    audio: null,
+    audioDuration: 0,
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    status: 'In Progress',
+    ward: 'Kowdiar Ward 12'
+  },
+  {
+    id: 'CMP-102934',
+    title: 'Streetlight Pole 14 Blown Out',
+    category: 'Electricity',
+    description: 'The streetlight near Golf Links main lane has failed. The street is completely dark and unsafe at night.',
+    location: 'Golf Links Road, Lane 3 (8.5230° N, 76.9612° E)',
+    priority: 'Medium',
+    photo: null,
+    audio: null,
+    audioDuration: 0,
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    status: 'Resolved',
+    ward: 'Kowdiar Ward 12'
+  }
+];
+
 export function getComplaints(): Complaint[] {
   if (typeof window === 'undefined') return [];
   const stored = localStorage.getItem(STORAGE_KEY);
   if (!stored) {
-    return [];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(SEED_COMPLAINTS));
+    return SEED_COMPLAINTS;
   }
   try {
     return JSON.parse(stored);

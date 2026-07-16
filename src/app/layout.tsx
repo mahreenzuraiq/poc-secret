@@ -6,6 +6,7 @@ import { AuthProvider } from "@/components/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
+import SabariChatBubble from "@/components/SabariChatBubble";
 
 export const metadata: Metadata = {
   title: "WardConnect — Kowdiar Ward Citizens' Portal",
@@ -43,6 +44,9 @@ export default function RootLayout({
 
               {/* Bottom Navigation */}
               <BottomNav />
+
+              {/* Floating Chat Bubble with K S Sabarinadhan */}
+              <SabariChatBubble />
             </AuthGuard>
           </ThemeProvider>
         </AuthProvider>
