@@ -6,18 +6,18 @@ import { Phone, Mail, MapPin, ExternalLink, MessageCircle, Send, X, ChevronDown 
 /* ─── Data ─────────────────────────────────────────────── */
 
 const COUNCILLOR = {
-  name: 'Councillor Satheesh Kumar',
+  name: 'K S Sabarinadhan',
   role: 'Ward Councillor',
   phone: '+91 94470 12345',
   email: 'councillor.kowdiar@municipal.gov.in',
   location: 'Kowdiar Community Hall, Room A',
   description: 'Elected representative. Handles citizen grievances, public works, and ward development.',
-  avatar: 'SK',
+  avatar: 'KS',
 };
 
 const OTHER_CONTACTS = [
   {
-    name: 'Smt. Bindu R.',
+    name: 'Smt. Jane Doe',
     role: 'Health Inspector',
     phone: '+91 94470 67890',
     email: 'hi.kowdiar@municipal.gov.in',
@@ -26,14 +26,14 @@ const OTHER_CONTACTS = [
     roleColor: '#1976D2', roleBg: '#E3F2FD',
   },
   {
-    name: 'Sri. Anil Kumar',
+    name: 'Sri. John Doe',
     role: 'Junior Health Inspector',
     phone: '+91 94470 54321',
     description: 'Waste management, street sweeping, garbage & drainage.',
     roleColor: '#F57F17', roleBg: '#FFF8E1',
   },
   {
-    name: 'Smt. Geetha S.',
+    name: 'Smt. Alice Smith',
     role: 'Ward Secretary',
     phone: '+91 94470 98765',
     location: 'Kowdiar Ward Office Annex',
