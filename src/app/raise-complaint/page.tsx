@@ -141,7 +141,7 @@ export default function RaiseComplaintPage() {
 
       <StepBar />
 
-      {/* ── Step 0: Category -── */}
+      {/* ── Step 0: Category --── */}
       {step === 0 && (
         <div className="flex flex-col gap-3">
           <p className="text-sm" style={{ color: '#6B7280' }}>What type of issue are you reporting?</p>
